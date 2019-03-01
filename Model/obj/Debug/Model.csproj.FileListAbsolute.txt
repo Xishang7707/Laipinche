@@ -1,0 +1,6 @@
+E:\Visual Studio 2017 Projects\Laipinche\Model\bin\Debug\Model.dll
+E:\Visual Studio 2017 Projects\Laipinche\Model\bin\Debug\Model.pdb
+E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Model.csprojAssemblyReference.cache
+E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Model.dll
+E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Model.pdb
