@@ -85,6 +85,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\footer.css">
+      <DependentUpon>footer.less</DependentUpon>
+    </Content>
+    <Content Include="css\footer.min.css">
+      <DependentUpon>footer.css</DependentUpon>
+    </Content>
+    <Content Include="css\global.css">
+      <DependentUpon>global.less</DependentUpon>
+    </Content>
+    <Content Include="css\global.min.css">
+      <DependentUpon>global.css</DependentUpon>
+    </Content>
+    <Content Include="css\header.css">
+      <DependentUpon>header.less</DependentUpon>
+    </Content>
+    <Content Include="css\header.min.css">
+      <DependentUpon>header.css</DependentUpon>
+    </Content>
+    <Content Include="css\index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="css\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="images\logo.png" />
+    <Content Include="images\pic1.jpg" />
+    <Content Include="images\pic2.jpg" />
+    <Content Include="images\pic3.jpg" />
+    <Content Include="Scripts\header.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Web.config" />
@@ -98,6 +127,12 @@
     <Content Include="css\index.less" />
     <Content Include="header.cshtml" />
     <Content Include="css\header.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="footer.cshtml" />
+    <Content Include="css\footer.less" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -106,9 +141,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="images\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

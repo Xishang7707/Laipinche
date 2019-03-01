@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "css/global.css",
+    "inputFile": "css/global.less"
+  },
+  {
+    "outputFile": "css/header.css",
+    "inputFile": "css/header.less"
+  },
+  {
+    "outputFile": "css/index.css",
+    "inputFile": "css/index.less"
+  },
+  {
+    "outputFile": "css/footer.css",
+    "inputFile": "css/footer.less"
+  }
+]

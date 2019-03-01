@@ -4,12 +4,105 @@
     <title>Car Pool 拼车网</title>
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script src="~/Scripts/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/css/global.less" />
-    <link rel="stylesheet" type="text/css" href="~/css/index.less" />
+    <link rel="stylesheet" type="text/css" href="~/css/global.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/index.min.css" />
 </head>
 <body>
-    <div class="main">
+    <div class="header">
+        <div class="wrapper">
+            @RenderPage("~/header.cshtml")
+        </div>
+    </div>
 
+    <div class="page">
+        <div class="caroucel">
+            <ul class="wrapper">
+                <li>
+                    <img src="~/images/pic1.jpg" />
+                    <div class="til">
+                        <span class="til_1">满载而归</span>
+                        <span class="til_2">Full</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="~/images/pic2.jpg" />
+                    <div class="til">
+                        <span class="til_1">舒适 方便 快捷</span>
+                        <span class="til_2">Good</span>
+                    </div>
+                </li>
+                <li>
+                    <img src="~/images/pic3.jpg" />
+                    <div class="til">
+                        <span class="til_1">让你马上拼到车</span>
+                        <span class="til_2">Fast</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="page" style="background:linear-gradient(#fff, #ccc);">
+        <h1 class="page_til">优势</h1>
+        <div class="advantage">
+            <dl class="item">
+                <dt>方便</dt>
+                <dd>随时随地都可以拼车<br /><br />内含百度地图，对位置记不清楚的可以方便搜索</dd>
+            </dl>
+            <dl class="item">
+                <dt><span>安全</span></dt>
+                <dd>进行实名认证，审查过后账户即可使用<br /><br />需要登记号车辆信息并且审核过后才能成为司机</dd>
+            </dl>
+            <dl class="item">
+                <dt><span>环保</span></dt>
+                <dd>一辆车多人使用，减轻交通压力，减少汽车尾气的排放</dd>
+            </dl>
+            <dl class="item">
+                <dt><span>省钱</span></dt>
+                <dd>费用由多人支付，以往的路程只需要支付1/n的钱</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="page">
+        <h1 class="page_til">简介</h1>
+        <div class="intro">
+            <dl class="item item_left">
+                <dt>
+                    <span class="til_l_1">黑车</span>
+                    <span class="til_l_2">=非法运营</span>
+                    <span class="til_l_3">V</span>
+                </dt>
+                <dd>
+                    <span class="list detail">非法运营是指未取得合法的道路运输资格而开展道路运营服务的车辆的道路运输行为</span>
+                    <span class="list">属于道路运输服务行为。</span>
+                    <span class="list">本质是以盈利为目的</span>
+                    <span class="list">漫天要价</span>
+                    <span class="list">路边揽客</span>
+                    <span class="list">不可预约</span>
+                    <span class="list">扰乱班车秩序</span>
+                    <span class="list">破坏社会和谐</span>
+                </dd>
+            </dl>
+            <dl class="item item_right">
+                <dt>
+                    <span class="til_r_3">S</span>
+                    <span class="til_r_1">拼车</span>
+                    <span class="til_r_2">=汽车共享</span>
+                </dt>
+                <dd>
+                    <span class="list detail">拼车是指通过共享汽车资源，分享用车费用的一种互助式汽车租赁行为。</span>
+                    <span class="list">属于物权转移的一种租赁行为</span>
+                    <span class="list">本质是互助分摊油费</span>
+                    <span class="list">低与运营车，高于地铁轻轨</span>
+                    <span class="list">线上预约合乘</span>
+                    <span class="list">优化匹配，选着面广</span>
+                    <span class="list">减缓城市拥堵</span>
+                    <span class="list">节约减排有益社会</span>
+                </dd>
+            </dl>
+        </div>
+        <div class="footer">
+            @RenderPage("~/footer.cshtml")
+        </div>
     </div>
 </body>
 </html>

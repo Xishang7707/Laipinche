@@ -1,2 +1,44 @@
-﻿@import 'global.less';
+﻿@import 'global';
 
+//头部
+header.header {
+    width: 100%;
+    min-width: @page_min_width;
+    height: @header_height;
+    overflow: hidden;
+    //logo
+    .logo {
+        width: 120px;
+        height: @header_height;
+        float: left;
+    }
+    //menu
+    .menu {
+        float: right;
+        height: 100%;
+        overflow: hidden;
+
+        li {
+            float: left;
+            height: 100%;
+
+            a {
+                display: block;
+                width: 100px;
+                height: 100%;
+                color: #fff;
+                text-align: center;
+                line-height: @header_height;
+                transition: .1s linear all;
+            }
+
+            a:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            a:active {
+                background-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+    }
+}
