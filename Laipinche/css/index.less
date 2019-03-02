@@ -1,6 +1,6 @@
 ﻿@import "global";
 
-div.header {
+.header {
     width: 100%;
     height: @header_height;
     background-color: rgba(0, 0, 0, 0.3);
@@ -70,9 +70,10 @@ div.header {
 
         .item {
             margin: 20px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, .4);
             float: left;
             transition: .2s all linear;
+            cursor: default;
 
             dt {
                 padding: 7px 0 20px 0;
@@ -89,8 +90,13 @@ div.header {
         }
 
         .item:hover {
-            background-color: @cursor-hover-in-bgcolor;
+            background-color: rgba(0, 0, 0, .1);
         }
+    }
+
+    .wrapper {
+        width: 100%;
+        height: 100%;
     }
 
     .page_til {
@@ -112,6 +118,7 @@ div.header {
             background-color: #ccc;
             padding: 7px;
 
+
             dd .list {
                 display: block;
                 margin-top: 13px;
@@ -120,7 +127,7 @@ div.header {
 
         .item_left {
             text-align: right;
-            background-color: #444;
+            background-color: rgba(44, 44, 44, .7);
 
             .til_l_1 {
                 font-size: 25px;
@@ -149,7 +156,7 @@ div.header {
 
         .item_right {
             text-align: left;
-            background-color: #e7e7e7;
+            background-color: rgba(231, 231, 231, .7);
 
             .til_r_1 {
                 font-size: 25px;

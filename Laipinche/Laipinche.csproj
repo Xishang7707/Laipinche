@@ -109,13 +109,29 @@
     <Content Include="css\index.min.css">
       <DependentUpon>index.css</DependentUpon>
     </Content>
+    <Content Include="css\register.css">
+      <DependentUpon>register.less</DependentUpon>
+    </Content>
+    <Content Include="css\register.min.css">
+      <DependentUpon>register.css</DependentUpon>
+    </Content>
+    <Content Include="images\error.png" />
+    <Content Include="images\info.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\ok.png" />
     <Content Include="images\pic1.jpg" />
     <Content Include="images\pic2.jpg" />
     <Content Include="images\pic3.jpg" />
+    <Content Include="images\pic4.jpg" />
+    <Content Include="images\pic5.jpg" />
+    <Content Include="images\pic6.jpg" />
+    <Content Include="images\tick.png" />
+    <Content Include="Scripts\global.js" />
     <Content Include="Scripts\header.js" />
     <Content Include="Scripts\index.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\register.js" />
+    <Content Include="Scripts\vue.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +149,9 @@
     </None>
     <Content Include="footer.cshtml" />
     <Content Include="css\footer.less" />
+    <Content Include="css\register.less" />
     <None Include="packages.config" />
+    <Content Include="register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

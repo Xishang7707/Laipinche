@@ -14,5 +14,9 @@
   {
     "outputFile": "css/footer.css",
     "inputFile": "css/footer.less"
+  },
+  {
+    "outputFile": "css/register.css",
+    "inputFile": "css/register.less"
   }
 ]

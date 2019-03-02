@@ -6,15 +6,29 @@
     <script src="~/Scripts/header.js"></script>
 </head>
 <body>
-    <header class="header">
+    @{
+        var url = "http://localhost:50822";
+        var head_font_color = PageData["head_font_color"];
+
+        HtmlString load_style()
+        {
+
+            if (head_font_color == null)
+                return null;
+            else return new HtmlString("<style>.header_content .menu li a{color: " + @head_font_color + ";}</style> ");
+        }
+    }
+
+    @load_style()
+    <header class="header_content">
         <img class="logo" src="~/images/logo.png" />
         <ul class="menu">
-            <li><a href="http://localhost:50822">首页</a></li>
+            <li><a href="@url">首页</a></li>
             <li><a href="#">最新拼车</a></li>
             <li><a href="#">开始拼车</a></li>
             <li><a href="#">发布拼车</a></li>
             <li class="us"><a href="#">登录</a></li>
-            <li class="us"><a href="#">注册</a></li>
+            <li class="us"><a href="@url/register.cshtml">注册</a></li>
         </ul>
     </header>
 </body>

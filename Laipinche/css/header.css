@@ -11,38 +11,40 @@ a {
 ul {
   list-style: none;
 }
-header.header {
+input {
+  outline: none;
+}
+.header_content {
   width: 100%;
   min-width: 720px;
   height: 50px;
   overflow: hidden;
 }
-header.header .logo {
+.header_content .logo {
   width: 120px;
   height: 50px;
   float: left;
 }
-header.header .menu {
+.header_content .menu {
   float: right;
   height: 100%;
   overflow: hidden;
 }
-header.header .menu li {
+.header_content .menu li {
   float: left;
   height: 100%;
 }
-header.header .menu li a {
+.header_content .menu li a {
   display: block;
   width: 100px;
   height: 100%;
-  color: #fff;
   text-align: center;
   line-height: 50px;
   transition: 0.1s linear all;
 }
-header.header .menu li a:hover {
+.header_content .menu li a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-header.header .menu li a:active {
+.header_content .menu li a:active {
   background-color: rgba(255, 255, 255, 0.4);
 }
