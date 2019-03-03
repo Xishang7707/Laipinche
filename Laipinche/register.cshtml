@@ -14,32 +14,101 @@
             @RenderPage("~/header.cshtml", new { head_font_color = "#fff" })
         </div>
     </div>
+
     <div class="page" style="background: url('images/pic6.jpg') no-repeat; background-size:100% 100%;">
         <div class="wrapper" style="background:linear-gradient(#fff, #fff, rgba(0, 0, 0, 0.00))">
-            <form action="#" method="post">
-                <div class="register">
-                    <div class="wrapper">
-                        <div class="title">欢迎注册Car Pool</div>
-                        <div class="title_min">爱上拼车生活</div>
-                        <div class="form">
+            <div class="register">
+                <div class="wrapper">
+                    <div class="title">欢迎注册Car Pool</div>
+                    <div class="title_min">爱上拼车生活</div>
+                    <form action="#" method="post">
+                        <div id="form-reg" class="form">
                             <div class="row">
                                 <div class="wrapper">
-                                    <div class="tip">用户名</div>
-                                    <input type="text" id="username" class="in" maxlength="15" autocomplete="off" />
-                                    <div class="tick"></div>
+                                    <div class="tip" v-bind:class="{hide:!verify_username(1)}">用户名</div>
+                                    <input type="text" v-on:focus="username_focus" v-on:blur="username_blur" id="username" v-model="username" class="in" maxlength="15" autocomplete="off" />
+                                    <div class="tick" v-bind:class="{show:verify_username()}"></div>
                                     <div class="info-tips-wrap">
-                                        <div class="info-tips" v-bind:class="{check_username_length?pl:''}">长度为5-15个字符</div>
-                                        <div class="info-tips">只能包含字母和数字</div>
+                                        <div class="info-tip" v-bind:class="{ok:verify_username(2)}">长度为5-15个字符</div>
+                                        <div class="info-tip" v-bind:class="{ok:verify_username(3)}">由字母数字或下划线组成</div>
+                                    </div>
+                                    <div class="error-tips-wrap">
+                                        <div class="error-tip" v-bind:class="{ok:!verify_username(1)}">用户名不能为空</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <input type="password" id="password" class="in" maxlength="18" autocomplete="off" />
+                                <div class="tip" v-bind:class="{hide:!verify_password(1)}">密码</div>
+                                <input type="password" v-on:focus="password_focus" v-on:blur="password_blur" id="password" v-model="password" class="in" maxlength="18" autocomplete="off" />
+                                <div class="tick" v-bind:class="{show:verify_password()}"></div>
+                                <div class="info-tips-wrap">
+                                    <div class="info-tip" v-bind:class="{ok:verify_password(2)}">不能包含空格</div>
+                                    <div class="info-tip" v-bind:class="{ok:verify_password(3)}">长度为6-18个字符</div>
+                                    <div class="info-tip" v-bind:class="{ok:verify_password(4)}">由字母、数字或符号组成</div>
+                                </div>
+                                <div class="error-tips-wrap">
+                                    <div class="error-tip" v-bind:class="{ok:!verify_password(1)}">密码不能为空</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="tip" v-bind:class="{hide:!verify_name(1)}">姓名</div>
+                                <input type="text" v-on:focus="name_focus" v-on:blur="name_blur" id="name" v-model="name" class="in" maxlength="18" autocomplete="off" />
+                                <div class="tick" v-bind:class="{show:verify_name()}"></div>
+                                <div class="info-tips-wrap">
+                                    <div class="info-tip" v-bind:class="{ok:verify_name()}">长度为2-4个中文</div>
+                                </div>
+                                <div class="error-tips-wrap">
+                                    <div class="error-tip" v-bind:class="{ok:!verify_name(1)}">密姓名不能为空</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="tip" v-bind:class="{hide:!verify_idcard(1)}">身份证号码</div>
+                                <input type="text" v-on:focus="idcard_focus" v-on:blur="idcard_blur" id="idcard" v-model="idcard" class="in" maxlength="18" autocomplete="off" />
+                                <div class="tick" v-bind:class="{show:verify_idcard()}"></div>
+                                <div class="info-tips-wrap">
+                                    <div class="info-tip" v-bind:class="{ok:verify_idcard()}">长度为15或18位身份证号码</div>
+                                </div>
+                                <div class="error-tips-wrap">
+                                    <div class="error-tip" v-bind:class="{ok:!verify_idcard(1)}">身份证号码不能为空</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="tel-area">+86</div>
+                                <div class="tel-wrap">
+                                    <div class="tip" v-bind:class="{hide:!verify_tel(1)}">手机号码</div>
+                                    <input type="text" v-on:focus="tel_focus" v-on:blur="tel_blur" id="tel" v-model="tel" class="in tel" maxlength="11" autocomplete="off" />
+                                    <div class="tick" v-bind:class="{show:verify_tel()}"></div>
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div class="info-tips-wrap">
+                                    <div class="info-tip" v-bind:class="{ok:verify_tel()}">11位手机号码</div>
+                                </div>
+                                <div class="error-tips-wrap">
+                                    <div class="error-tip" v-bind:class="{ok:!verify_tel(1)}">手机号码不能为空</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="telcode-wrap">
+                                    <div class="tip" v-bind:class="{hide:!verify_telcode(1)}">短信验证码</div>
+                                    <input type="text" v-on:focus="telcode_focus" v-on:blur="telcode_blur" id="telcode" v-model="telcode" class="in telcode" maxlength="11" autocomplete="off" />
+                                    <div class="tick" v-bind:class="{show:verify_telcode()}"></div>
+                                </div>
+                                <input id="send-telcode" class="btn-send-telcode" type="button" value="发送短信验证码" />
+                                <div style="clear:both;"></div>
+                                @*<div class="info-tips-wrap">
+                                        <div class="info-tip" v-bind:class="{ok:verify_telcode()}"></div>
+                                    </div>*@
+                                <div class="error-tips-wrap">
+                                    <div class="error-tip" v-bind:class="{ok:!verify_telcode(1)}">验证码不能为空</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="button" id="register" class="btn-register" value="立即注册" />
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </body>

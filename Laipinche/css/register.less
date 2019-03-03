@@ -25,6 +25,36 @@
     position: relative;
 }
 
+.page {
+    width: 100%;
+    height: 100%;
+    min-width: @page_min_width;
+    overflow: hidden;
+    position: relative;
+    min-height: 700px;
+
+
+    .register {
+        width: @page_min_width;
+        min-width: @page_min_width;
+        position: absolute;
+        top: 10%;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, .3);
+
+        .title {
+            font-size: 50px;
+            font-weight: 400;
+            cursor: default;
+        }
+
+        .title_min {
+            font-size: 25px;
+            cursor: default;
+        }
+    }
+}
+
 .form {
     width: 480px;
     height: 100%;
@@ -34,22 +64,91 @@
 
     .row {
         width: 100%;
-
+        margin: 20px 0;
+        position: relative;
+        //默认input
         .in {
             width: 438px;
             height: 50px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            transition: .2s all linear;
+            transition: .1s all linear;
             font-size: 20px;
             padding: 0 20px;
+        }
+        //手机号码input
+        .tel-wrap {
+            width: 400px;
+            height: 52px;
+            position: relative;
+            float: right;
+        }
+
+        .in.tel {
+            width: 358px;
+        }
+
+        .tel-area {
+            font-size: 20px;
+            height: 52px;
+            line-height: 52px;
+            text-align: center;
+            width: 80px;
+            float: left;
+            font-weight: 400;
+        }
+        //手机验证码
+        .telcode-wrap {
+            width: 200px;
+            height: 52px;
+            float: left;
+        }
+
+        .in.telcode {
+            width: 180px;
+        }
+        //发送短信验证码
+        .btn-send-telcode {
+            float: right;
+            width: 235px;
+            height: 52px;
+            background-color: #09f;
+            border-width: 0;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: 400;
+            color: #fff;
+            cursor: pointer;
+            transition: .1s all linear;
+        }
+
+        .btn-send-telcode:hover {
+            background-color: #06f;
+        }
+
+        .btn-register {
+            width: 100%;
+            height: 60px;
+            border-width: 0;
+            background-color: #09f;
+            border-radius: 5px;
+            transition: .1s all linear;
+            font-size: 20px;
+            text-align: center;
+            font-weight: 400;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn-register:hover {
+            background-color: #06f;
         }
         //提示文字
         .tip {
             position: absolute;
             top: 0;
             height: 50px;
-            color: #aaa;
+            color: #7f7f7f;
             font-size: 20px;
             padding-left: 20px;
             line-height: 50px;
@@ -64,6 +163,7 @@
             height: 15px;
             margin: 17.5px 20px;
             background: url('../images/tick.png') no-repeat;
+            display: none;
         }
 
         .in:hover {
@@ -74,7 +174,7 @@
             border-color: #09f;
         }
 
-        .in.success {
+        .in.ok {
             border-color: #0f0;
         }
 
@@ -86,7 +186,7 @@
             width: 100%;
             display: none;
 
-            .info-tips {
+            .info-tip {
                 height: 18px;
                 background: url('../images/info.png') no-repeat;
                 padding-left: 22px;
@@ -94,40 +194,31 @@
                 margin: 7px 0;
             }
 
-            .info-tips.ok {
+            .info-tip.ok {
                 background: url('../images/ok.png') no-repeat;
                 color: #0f0;
             }
         }
-    }
 
-    input.has_value {
+        .error-tips-wrap {
+            width: 100%;
+            display: none;
+
+            .error-tip {
+                height: 18px;
+                background: url('../images/error.png') no-repeat;
+                padding-left: 22px;
+                line-height: 18px;
+                margin: 7px 0;
+            }
+        }
     }
 }
 
-.page {
-    width: 100%;
-    height: 100%;
-    min-width: @page_min_width;
-    overflow: hidden;
-    position: relative;
-    min-height: 700px;
+.show {
+    display: block !important;
+}
 
-
-    .register {
-        width: @page_min_width;
-        min-width: @page_min_width;
-        position: absolute;
-        overflow: hidden;
-        background-color: rgba(255, 255, 255, .3);
-
-        .title {
-            font-size: 50px;
-            font-weight: 400;
-        }
-
-        .title_min {
-            font-size: 25px;
-        }
-    }
+.hide {
+    display: none !important;
 }
