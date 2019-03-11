@@ -50,7 +50,7 @@ input {
   position: absolute;
   top: 10%;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.35);
 }
 .page .register .title {
   font-size: 50px;
@@ -120,6 +120,9 @@ input {
   color: #fff;
   cursor: pointer;
   transition: 0.1s all linear;
+}
+.form .row .btn-send-telcode.btn-send-telcode-waiting {
+  background-color: #029 !important;
 }
 .form .row .btn-send-telcode:hover {
   background-color: #06f;
@@ -197,6 +200,7 @@ input {
   padding-left: 22px;
   line-height: 18px;
   margin: 7px 0;
+  display: none;
 }
 .show {
   display: block !important;

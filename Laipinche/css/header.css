@@ -36,7 +36,7 @@ input {
 }
 .header_content .menu li a {
   display: block;
-  width: 100px;
+  min-width: 100px;
   height: 100%;
   text-align: center;
   line-height: 50px;
@@ -47,4 +47,30 @@ input {
 }
 .header_content .menu li a:active {
   background-color: rgba(255, 255, 255, 0.4);
+}
+.header_content .menu .us-infoh {
+  background-color: transparent;
+  min-width: 250px;
+  display: none;
+}
+.header_content .menu .us-infoh #h-user-name {
+  line-height: 50px;
+  color: #fff;
+  float: left;
+  cursor: pointer;
+}
+.header_content .menu .us-infoh a {
+  height: 50px;
+  width: 100px;
+  float: right;
+}
+.header_content .menu .us-infoh #h-user-logout {
+  line-height: 50px;
+  color: #fff;
+}
+.header_content .menu .us-infoh #user-loginout:hover {
+  background-color: rgba(255, 0, 0, 0.9);
+}
+.header_content .menu .us-infoh #user-loginout:active {
+  background-color: rgba(200, 0, 0, 0.9);
 }

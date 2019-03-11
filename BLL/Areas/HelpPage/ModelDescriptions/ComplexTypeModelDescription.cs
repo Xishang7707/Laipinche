@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 
-namespace BLL.Areas.HelpPage.ModelDescriptions
+namespace Laipinche.BLL.Areas.HelpPage.ModelDescriptions
 {
     public class ComplexTypeModelDescription : ModelDescription
     {

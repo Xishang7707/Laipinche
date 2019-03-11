@@ -3,6 +3,13 @@
 <head>
     <title>Car Pool 拼车网</title>
     <link href="~/css/header.min.css" rel="stylesheet" />
+    <link href="~/css/login.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.cookie-1.4.1.min.js"></script>
+    <script src="~/Scripts/jsencrapy.js"></script>
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/global.js"></script>
+    <script src="~/Scripts/login.js"></script>
     <script src="~/Scripts/header.js"></script>
 </head>
 <body>
@@ -12,7 +19,6 @@
 
         HtmlString load_style()
         {
-
             if (head_font_color == null)
                 return null;
             else return new HtmlString("<style>.header_content .menu li a{color: " + @head_font_color + ";}</style> ");
@@ -27,9 +33,51 @@
             <li><a href="#">最新拼车</a></li>
             <li><a href="#">开始拼车</a></li>
             <li><a href="#">发布拼车</a></li>
-            <li class="us"><a href="#">登录</a></li>
+            <li class="us"><a href="#" onclick="Login_Show()">登录</a></li>
             <li class="us"><a href="@url/register.cshtml">注册</a></li>
+            <li class="us-infoh">
+                <div id="h-user-name"></div>
+                <a id="user-loginout" href="#" onclick="Login_LoginOut()">登出</a>
+            </li>
         </ul>
     </header>
+
+    <div id="login_form">
+        <p class="login_title">登录</p>
+        <img id="login_form_close" src="~/images/close.png" v-on:click="close_form" />
+        <div class="login_form_row_wrap">
+            <div class="login_form_row">
+                <div class="login_form_wrap">
+                    <div class="form_in_wrap">
+                        <div class="form_in_tip" v-bind:class="{hide:!verify_username()}">用户名</div>
+                        <input class="form_in" type="text" id="username" v-on:focus="in_focus" v-on:blur="in_blur" v-model="username" autocomplete="off" maxlength="15" />
+                    </div>
+                    <a class="form_link_reg" href="~/register.cshtml">注册账号</a>
+                    <div class="form_tips_info">
+                        <div class="tip_info">请输入用户名</div>
+                    </div>
+                </div>
+            </div>
+            <div class="login_form_row">
+                <div class="login_form_wrap">
+                    <div class="form_in_wrap">
+                        <div class="form_in_tip" v-bind:class="{hide:!verify_password()}">密码</div>
+                        <input class="form_in" type="password" id="password" v-on:focus="in_focus" v-on:blur="in_blur" v-model="password" autocomplete="off" maxlength="18" />
+                    </div>
+                    <a class="form_link_reg" href="~/register.cshtml">忘记密码</a>
+                    <div class="form_tips_info">
+                        <div class="tip_info">请输入密码</div>
+                    </div>
+                </div>
+            </div>
+            <div class="login_form_row">
+                <div class="login_form_wrap">
+                    <div class="form_in_wrap">
+                        <input type="button" id="form_login" v-on:click="login_user" value="登录" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

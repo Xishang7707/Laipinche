@@ -1,10 +1,10 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using BLL.Areas.HelpPage.ModelDescriptions;
-using BLL.Areas.HelpPage.Models;
+using Laipinche.BLL.Areas.HelpPage.ModelDescriptions;
+using Laipinche.BLL.Areas.HelpPage.Models;
 
-namespace BLL.Areas.HelpPage.Controllers
+namespace Laipinche.BLL.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

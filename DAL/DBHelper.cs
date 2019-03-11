@@ -1,12 +1,12 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace DAL.Laipinche
+namespace Laipinche.DAL
 {
     class DBHelper
     {
-        static string conStr = "Data Source=.;Initial Catalog=Laipingche;Persist Security Info=True;User ID=sa;Password=123456";
-        static SqlConnection conn;
+        static string conStr = "server=.;database=Laipinche;uid=sa;pwd=123456";
+        static SqlConnection conn = new SqlConnection(conStr);
 
 
         /// <summary>
@@ -14,32 +14,46 @@ namespace DAL.Laipinche
         /// </summary>
         private static void InitConnection()
         {
-            if (conn == null || conn.State != ConnectionState.Open)
-                conn = new SqlConnection(conStr);
-            conn.Open();
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
         }
         /// <summary>
         /// 执行数据库语句
         /// </summary>
         /// <param name="cmd">数据库语句</param>
-        /// <returns>受影响行数</returns>
-        public static int Exec(string cmd)
+        /// <param name="values">参数化值</param>
+        /// <returns></returns>
+        public static int Exec(string cmd, params dynamic[] values)
         {
             InitConnection();
             SqlCommand sqlCmd = new SqlCommand(cmd, conn);
-            return sqlCmd.ExecuteNonQuery();
+            for (int i = 0; i < values.Length; i += 2)
+            {
+                sqlCmd.Parameters.AddWithValue(values[i].ToString(), values[i + 1]);
+            }
+
+            int result = sqlCmd.ExecuteNonQuery();
+            conn.Close();
+            return result;
         }
         /// <summary>
         /// 获取表数据
         /// </summary>
         /// <param name="cmd">数据库语句</param>
         /// <returns>表数据</returns>
-        public static DataTable GetTable(string cmd)
+        public static DataTable GetTable(string cmd, params dynamic[] values)
         {
             InitConnection();
-            SqlDataAdapter sda = new SqlDataAdapter(cmd, conn);
+            SqlCommand sqlCmd = new SqlCommand(cmd, conn);
+            for (int i = 0; i < values.Length; i += 2)
+            {
+                sqlCmd.Parameters.AddWithValue(values[i].ToString(), values[i + 1]);
+            }
+
+            SqlDataAdapter sda = new SqlDataAdapter(sqlCmd);
             DataTable dt = new DataTable();
             sda.Fill(dt);
+            conn.Close();
             return dt;
         }
     }

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
-namespace BLL.Areas.HelpPage.ModelDescriptions
+namespace Laipinche.BLL.Areas.HelpPage.ModelDescriptions
 {
     internal static class ModelNameHelper
     {

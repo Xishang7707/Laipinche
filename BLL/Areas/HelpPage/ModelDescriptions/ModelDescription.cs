@@ -1,6 +1,6 @@
 using System;
 
-namespace BLL.Areas.HelpPage.ModelDescriptions
+namespace Laipinche.BLL.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

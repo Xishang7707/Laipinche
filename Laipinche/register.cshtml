@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>用户注册-Car Pool</title>
+    <title>注册-Car Pool</title>
     <link rel="stylesheet" type="text/css" href="~/css/register.min.css" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jsencrapy.js"></script>
     <script src="~/Scripts/vue.js"></script>
     <script src="~/Scripts/global.js"></script>
     <script src="~/Scripts/register.js"></script>
@@ -33,7 +34,8 @@
                                         <div class="info-tip" v-bind:class="{ok:verify_username(3)}">由字母数字或下划线组成</div>
                                     </div>
                                     <div class="error-tips-wrap">
-                                        <div class="error-tip" v-bind:class="{ok:!verify_username(1)}">用户名不能为空</div>
+                                        <div class="error-tip" v-bind:class="{show:verify_username(1)}">用户名不能为空</div>
+                                        <div class="error-tip" v-bind:class="{'show':exist_username}">用户名已被注册</div>
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +49,7 @@
                                     <div class="info-tip" v-bind:class="{ok:verify_password(4)}">由字母、数字或符号组成</div>
                                 </div>
                                 <div class="error-tips-wrap">
-                                    <div class="error-tip" v-bind:class="{ok:!verify_password(1)}">密码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{show:verify_password(1)}">密码不能为空</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -58,7 +60,7 @@
                                     <div class="info-tip" v-bind:class="{ok:verify_name()}">长度为2-4个中文</div>
                                 </div>
                                 <div class="error-tips-wrap">
-                                    <div class="error-tip" v-bind:class="{ok:!verify_name(1)}">密姓名不能为空</div>
+                                    <div class="error-tip" v-bind:class="{show:verify_name(1)}">姓名不能为空</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -66,10 +68,11 @@
                                 <input type="text" v-on:focus="idcard_focus" v-on:blur="idcard_blur" id="idcard" v-model="idcard" class="in" maxlength="18" autocomplete="off" />
                                 <div class="tick" v-bind:class="{show:verify_idcard()}"></div>
                                 <div class="info-tips-wrap">
-                                    <div class="info-tip" v-bind:class="{ok:verify_idcard()}">长度为15或18位身份证号码</div>
+                                    <div class="info-tip" v-bind:class="{ok:verify_idcard()}">18位身份证号码</div>
                                 </div>
                                 <div class="error-tips-wrap">
-                                    <div class="error-tip" v-bind:class="{ok:!verify_idcard(1)}">身份证号码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{show:verify_idcard(1)}">身份证号码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{'show':exist_idcard}">身份证号码已被登记</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -84,7 +87,8 @@
                                     <div class="info-tip" v-bind:class="{ok:verify_tel()}">11位手机号码</div>
                                 </div>
                                 <div class="error-tips-wrap">
-                                    <div class="error-tip" v-bind:class="{ok:!verify_tel(1)}">手机号码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{show:verify_tel(1)}">手机号码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{'show':exist_tel}">手机号码已被注册</div>
                                 </div>
                             </div>
                             <div class="row">
@@ -93,17 +97,19 @@
                                     <input type="text" v-on:focus="telcode_focus" v-on:blur="telcode_blur" id="telcode" v-model="telcode" class="in telcode" maxlength="11" autocomplete="off" />
                                     <div class="tick" v-bind:class="{show:verify_telcode()}"></div>
                                 </div>
-                                <input id="send-telcode" class="btn-send-telcode" type="button" value="发送短信验证码" />
+                                <input id="send-telcode" class="btn-send-telcode" v-bind:class="{'btn-send-telcode-waiting':is_send_telcode}" v-on:click="send_telcode" type="button" value="发送短信验证码" />
                                 <div style="clear:both;"></div>
                                 @*<div class="info-tips-wrap">
                                         <div class="info-tip" v-bind:class="{ok:verify_telcode()}"></div>
                                     </div>*@
                                 <div class="error-tips-wrap">
-                                    <div class="error-tip" v-bind:class="{ok:!verify_telcode(1)}">验证码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{show:verify_telcode(1)}">验证码不能为空</div>
+                                    <div class="error-tip" v-bind:class="{'show':is_true_telcode==1}">短信验证码错误</div>
+                                    <div class="error-tip" v-bind:class="{'show':is_true_telcode==2}">短信验证码过期</div>
                                 </div>
                             </div>
                             <div class="row">
-                                <input type="button" id="register" class="btn-register" value="立即注册" />
+                                <input type="button" id="register" class="btn-register" v-on:click="register" value="立即注册" />
                             </div>
                         </div>
                     </form>

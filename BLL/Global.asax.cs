@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.SessionState;
 
-namespace BLL
+namespace Laipinche.BLL
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        //private const string WebApiPrefix = "api";
+        //private static string WebApiExecutePath = string.Format("~/{0}", WebApiPrefix);
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -18,6 +20,28 @@ namespace BLL
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        public override void Init()
+        {
+            this.PostAuthenticateRequest += (sender, e) => HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+            base.Init();
+        }
+        protected void Application_PostAuthorizeRequest()
+        {
+            HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var req = HttpContext.Current.Request;
+            if (req.HttpMethod.ToUpper() == "OPTIONS")//跨域响应
+            {
+                Response.StatusCode = 200;
+                Response.SubStatusCode = 200;
+                Response.End();
+            }
+
         }
     }
 }

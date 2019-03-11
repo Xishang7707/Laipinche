@@ -1,4 +1,4 @@
-namespace BLL.Areas.HelpPage.ModelDescriptions
+namespace Laipinche.BLL.Areas.HelpPage.ModelDescriptions
 {
     public class CollectionModelDescription : ModelDescription
     {

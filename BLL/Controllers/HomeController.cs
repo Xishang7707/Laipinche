@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BLL.Controllers
+namespace Laipinche.BLL.Controllers
 {
     public class HomeController : Controller
     {

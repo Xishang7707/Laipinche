@@ -40,7 +40,7 @@
         position: absolute;
         top: 10%;
         overflow: hidden;
-        background-color: rgba(255, 255, 255, .3);
+        background-color: rgba(255, 255, 255, .35);
 
         .title {
             font-size: 50px;
@@ -120,6 +120,10 @@
             color: #fff;
             cursor: pointer;
             transition: .1s all linear;
+        }
+
+        .btn-send-telcode.btn-send-telcode-waiting {
+            background-color: #029 !important;
         }
 
         .btn-send-telcode:hover {
@@ -210,6 +214,7 @@
                 padding-left: 22px;
                 line-height: 18px;
                 margin: 7px 0;
+                display: none;
             }
         }
     }

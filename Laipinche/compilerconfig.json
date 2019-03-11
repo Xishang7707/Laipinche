@@ -18,5 +18,9 @@
   {
     "outputFile": "css/register.css",
     "inputFile": "css/register.less"
+  },
+  {
+    "outputFile": "css/login.css",
+    "inputFile": "css/login.less"
   }
 ]

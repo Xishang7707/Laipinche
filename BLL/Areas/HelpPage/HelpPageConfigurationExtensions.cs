@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using BLL.Areas.HelpPage.ModelDescriptions;
-using BLL.Areas.HelpPage.Models;
+using Laipinche.BLL.Areas.HelpPage.ModelDescriptions;
+using Laipinche.BLL.Areas.HelpPage.Models;
 
-namespace BLL.Areas.HelpPage
+namespace Laipinche.BLL.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

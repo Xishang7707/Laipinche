@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using BLL.Areas.HelpPage.ModelDescriptions;
+using Laipinche.BLL.Areas.HelpPage.ModelDescriptions;
 
-namespace BLL.Areas.HelpPage.Models
+namespace Laipinche.BLL.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.

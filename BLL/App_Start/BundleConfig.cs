@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace BLL
+namespace Laipinche.BLL
 {
     public class BundleConfig
     {

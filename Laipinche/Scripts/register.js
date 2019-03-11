@@ -1,5 +1,5 @@
 ﻿var win = $(window)
-var bll_url = 'http://localhost:50843/'
+var bll_url = 'http://localhost:50843/api/'
 var page_min_width = 720;
 
 function init() {
@@ -48,7 +48,13 @@ var form_model = {
         name: "",
         idcard: "",
         tel: "",
-        telcode: ""
+        telcode: "",
+        exist_username: false,
+        exist_tel: false,
+        exist_idcard: false,
+        is_true_telcode: 0,
+        is_send_telcode: false,
+        is_submit: false
     },
     methods: {
         /**
@@ -60,18 +66,20 @@ var form_model = {
             _this.siblings(".info-tips-wrap").slideDown(100);
             _this.siblings(".tick").removeClass("show");
             _this.removeClass("error");
+            this.exist_username = false;
         },
         username_blur: function (e) {
             var _this = $(e.target);
 
             _this.siblings(".info-tips-wrap").slideUp(100);
-            if (this.verify_username(1))
+            if (this.verify_username(1) || this.exist_username)
                 _this.siblings(".error-tips-wrap").slideDown(100);
             if (this.verify_username()) {
                 _this.siblings(".tick").addClass("show");
             }
-            else if (this.verify_username(1))
+            if (this.verify_username(1))
                 _this.addClass("error");
+            this.verify_username(4);
         },
         password_focus: function (e) {
             var _this = $(e.target);
@@ -110,12 +118,14 @@ var form_model = {
             }
             else if (this.verify_name(1))
                 _this.addClass("error");
-        }, idcard_focus: function (e) {
+        },
+        idcard_focus: function (e) {
             var _this = $(e.target);
             _this.siblings(".error-tips-wrap").slideUp(100);
             _this.siblings(".info-tips-wrap").slideDown(100);
             _this.siblings(".tick").removeClass("show");
             _this.removeClass("error");
+            this.exist_idcard = false;
         },
         idcard_blur: function (e) {
             var _this = $(e.target);
@@ -128,13 +138,16 @@ var form_model = {
             }
             else if (this.verify_idcard(1))
                 _this.addClass("error");
-        }, tel_focus: function (e) {
+            this.verify_idcard(3);
+        },
+        tel_focus: function (e) {
             var _this = $(e.target);
 
             _this.parent().parent().find(".error-tips-wrap").slideUp(100);
             _this.parent().parent().find(".info-tips-wrap").slideDown(100);
             _this.siblings(".tick").removeClass("show");
             _this.removeClass("error");
+            this.exist_tel = false;
         },
         tel_blur: function (e) {
             var _this = $(e.target);
@@ -147,13 +160,16 @@ var form_model = {
             }
             else if (this.verify_tel(1))
                 _this.addClass("error");
-        }, telcode_focus: function (e) {
+            this.verify_tel(3);
+        },
+        telcode_focus: function (e) {
             var _this = $(e.target);
 
             _this.parent().parent().find(".error-tips-wrap").slideUp(100);
             _this.parent().parent().find(".info-tips-wrap").slideDown(100);
             _this.siblings(".tick").removeClass("show");
             _this.removeClass("error");
+            this.is_true_telcode = 0;
         },
         telcode_blur: function (e) {
             var _this = $(e.target);
@@ -167,7 +183,7 @@ var form_model = {
             else if (this.verify_telcode(1))
                 _this.addClass("error");
         },
-
+        //验证
         /**
          * 验证用户名
          * @param {number} id
@@ -186,9 +202,25 @@ var form_model = {
                 case 3://包含字母
                     reg = /^([\w]*[a-zA-Z]+[\w]*)$/;
                     break;
+                case 4://是否被注册
+                    {
+                        if (this.verify_username(2) && this.verify_username(3))
+                            send_data({
+                                url: bll_url + "verify/exists",
+                                data: { username: this.username, type: 0 },
+                                callback: (in_data) => {
+                                    var data = JSON.parse(in_data);
+
+                                    if (data != null && data['code'] == 1)
+                                        this.exist_username = true;
+                                    else this.exist_username = false;
+                                }
+                            })
+                    }
+                    break;
                 default:
                     if (reg.test(val) &&
-                        /^\w{5,15}$/.test(val))
+                        /^\w{5,15}$/.test(val) && !this.exist_username)
                         return true;
                     else return false;
 
@@ -241,15 +273,29 @@ var form_model = {
             var val = this.idcard;
 
             var regs = [
-                /[1-9]\d{5}[19|20]\d{2}((0)[1-9]|(1[0-2]))((0[1-9])|([1|2]\d)|(3[0-1]))\d{3}[\dXx]/ //15或18为身份证号码
+                /^[1-9]\d{5}((19)|(20))\d{2}(0[1-9]|1[0-2])((0[1-9])|[1-2]\d|30|31)\d{3}[0-9Xx]$/ //18位身份证号码
             ];
             switch (id) {
                 case 1://判断为空
                     return val_empty(val);
                 case 2://2-4个中文
                     return regs[0].test(val);
+                case 3:
+                    if (this.verify_idcard(2))
+                        send_data({
+                            url: bll_url + "verify/exists",
+                            data: { idcard: this.idcard, type: 1 },
+                            callback: (in_data) => {
+                                data = JSON.parse(in_data);
+                                if (data['code'] == 1) {
+                                    this.exist_idcard = true;
+                                } else {
+                                    this.exist_idcard = false;
+                                }
+                            }
+                        });
             }
-            return regs[0].test(val);
+            return regs[0].test(val) && !this.exist_idcard;
         },
         verify_tel: function (id = 0) {
             var val = this.tel;
@@ -263,9 +309,24 @@ var form_model = {
                     return val_empty(val);
                 case 2:
                     return regs[0].test(val);
+                case 3://手机号码被注册
+                    if (this.verify_tel(2))
+                        send_data({
+                            url: bll_url + "verify/exists",
+                            data: { tel: this.tel, type: 2 },
+                            callback: (in_data) => {
+                                data = JSON.parse(in_data);
+                                if (data['code'] == 1) {
+                                    this.exist_tel = true;
+                                } else {
+                                    this.exist_tel = false;
+                                }
+                            }
+                        });
+                    return;
             }
 
-            return regs[0].test(val);
+            return regs[0].test(val) && !this.exist_tel;
         },
         verify_telcode: function (id = 0) {
             var val = this.telcode;
@@ -282,15 +343,153 @@ var form_model = {
             }
 
             return regs[0].test(val);
+        },
+        /**
+         * 发送短信验证码
+         * */
+        send_telcode: function (e) {
+            var _this = $(e.target);
+
+            if (!this.verify_tel()) {
+                $(this.$el).find("#tel").focus();
+                $(this.$el).find("#tel").blur();
+                return;
+            }
+
+            //当手机号码没有被注册
+            if (this.exist_tel == false) {
+                send_data({
+                    url: bll_url + "communicate/sendtelcode",
+                    data: { tel: this.tel },
+                    callback: function (in_data) {
+                        var data = JSON.parse(in_data);
+                        if (data['code'] == 200) {
+                            _this.val("发送成功");
+
+                        } else alert(data["status"])
+                    }
+                });
+
+                if (this.is_send_telcode)
+                    return;
+                this.is_send_telcode = true;
+
+                var t_send = 60;
+                var clock = setInterval(() => {
+                    t_send--;
+                    if (t_send <= 0) {
+                        clearInterval(clock);
+                        this.is_send_telcode = false;
+                        _this.val("发送短信验证码");
+                        return;
+                    }
+                    _this.val("重新发送" + t_send + "秒");
+                }, 1000)
+            }
+        },
+        register: function () {
+            if (this.is_submit)
+                return;
+            this.is_submit = true;
+            var flag = 0;
+            if (!this.verify_username()) {
+                flag--;
+                $(this.$el).find("#username").focus();
+                $(this.$el).find("#username").blur();
+            }
+
+            if (!this.verify_password()) {
+                flag--;
+                $(this.$el).find("#password").focus();
+                $(this.$el).find("#password").blur();
+            }
+
+            if (!this.verify_name()) {
+                flag--;
+                $(this.$el).find("#name").focus();
+                $(this.$el).find("#name").blur();
+            }
+
+            if (!this.verify_idcard()) {
+                flag--;
+                $(this.$el).find("#idcard").focus();
+                $(this.$el).find("#idcard").blur();
+            }
+            if (!this.verify_tel()) {
+                flag--;
+                $(this.$el).find("#tel").focus();
+                $(this.$el).find("#tel").blur();
+            }
+            if (!this.verify_telcode()) {
+                flag--;
+                $(this.$el).find("#telcode").focus();
+                $(this.$el).find("#telcode").blur();
+            }
+            if (flag != 0) {
+                this.is_submit = false;
+                return;
+            }
+            this.is_submit = true;
+            var btn_register = $("#register");
+            btn_register.val("请稍等．．．");
+            send_data({
+                url: bll_url + "users/register",
+                data: { username: this.username, password: this.password, name: this.name, idcard: this.idcard, tel: this.tel, telcode: this.telcode },
+                type: "POST",
+                callback: (in_data) => {
+                    var data = JSON.parse(in_data);
+                    if (data['code'] == 200) {
+                        btn_register.val("注册成功");
+                        setTimeout(function () {
+                            location.reload();
+                        }, 2000);
+                    }
+                    else {
+                        if (data['code'] == 10004)
+                            this.is_true_telcode = 1;
+                        else if (data['code'] == 10005)
+                            this.is_true_telcode = 2;
+                        else btn_register.val("注册失败,请检查信息");
+                        this.is_submit = false;
+                    }
+                }
+            })
         }
     },
     //监听
     watch: {
+        exist_username: function (n_v) {
 
+            var _this = $(this.$el);
+            if (n_v == true)
+                _this.find("#username").siblings(".error-tips-wrap").slideDown(100);
+            else _this.find("#username").siblings(".error-tips-wrap").slideUp(100);
+        },
+        exist_tel: function (n_v) {
+
+            var _this = $(this.$el);
+
+            if (n_v == true)
+                _this.find("#tel").parent().parent().find(".error-tips-wrap").slideDown(100);
+            else _this.find("#tel").parent().parent().find(".error-tips-wrap").slideUp(100);
+        },
+        exist_idcard: function (n_v) {
+            var _this = $(this.$el);
+
+            if (n_v == true)
+                _this.find("#idcard").siblings(".error-tips-wrap").slideDown(100);
+            else _this.find("#idcard").siblings(".error-tips-wrap").slideUp(100);
+        },
+        is_true_telcode: function (n_v) {
+            var _this = $(this.$el);
+
+            if (n_v != 0)
+                _this.find("#telcode").parent().siblings(".error-tips-wrap").slideDown(100);
+            else _this.find("#telcode").parent().siblings(".error-tips-wrap").slideUp(100);
+        }
     }
 };
 
-//入口
 $(function () {
     init();
     new Vue(form_model);

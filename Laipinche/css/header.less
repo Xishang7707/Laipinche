@@ -24,7 +24,7 @@
 
             a {
                 display: block;
-                width: 100px;
+                min-width: 100px;
                 height: 100%;
                 text-align: center;
                 line-height: @header_height;
@@ -37,6 +37,38 @@
 
             a:active {
                 background-color: rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .us-infoh {
+            background-color: transparent;
+            min-width: 250px;
+            display: none;
+
+            #h-user-name {
+                line-height: 50px;
+                color: #fff;
+                float: left;
+                cursor: pointer;
+            }
+
+            a {
+                height: 50px;
+                width: 100px;
+                float: right;
+            }
+
+            #h-user-logout {
+                line-height: 50px;
+                color: #fff;
+            }
+
+            #user-loginout:hover {
+                background-color: rgba(255,0,0, .9);
+            }
+
+            #user-loginout:active {
+                background-color: rgba(200,0,0, .9);
             }
         }
     }

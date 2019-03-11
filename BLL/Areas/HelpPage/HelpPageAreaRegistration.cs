@@ -1,7 +1,7 @@
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace BLL.Areas.HelpPage
+namespace Laipinche.BLL.Areas.HelpPage
 {
     public class HelpPageAreaRegistration : AreaRegistration
     {

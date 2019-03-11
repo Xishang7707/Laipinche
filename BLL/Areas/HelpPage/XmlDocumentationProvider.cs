@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Xml.XPath;
-using BLL.Areas.HelpPage.ModelDescriptions;
+using Laipinche.BLL.Areas.HelpPage.ModelDescriptions;
 
 namespace BLL.Areas.HelpPage
 {
