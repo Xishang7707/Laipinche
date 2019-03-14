@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>热门拼车</title>
+    <link href="~/css/startcarpool.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=creGl1m1QdF4GxrBoNLNYvlbEIZCIcLi"></script>
+    <script src="~/Scripts/global.js"></script>
+    <script src="~/Scripts/startcarpool.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="wrapper">
+            @RenderPage("~/header.cshtml", new { head_font_color = "#fff" })
+        </div>
+    </div>
+    <div class="page" style="background-image: url('images/pic7.jpg'); background-size:100% 100%;">
+        <div class="wrapper" style="background:linear-gradient(rgba(0, 0, 0, 0.00), #fff)">
+            <div class="content-wrap">
+                <ul class="mode-menu">
+                    <li><a href="#">长途拼车</a></li>
+                    <li><a href="#">上下班拼车</a></li>
+                    <li><a href="#">拼车关注</a></li>
+                </ul>
+                <span class="mode-adv">智能并精确计算出拼车路程、油费和高速路桥费</span>
+                <div class="mode mode-1" id="mode-1">
+                    <ul class="mode-search">
+                        <li class="in-til"><span>出发城市：</span></li>
+                        <li class="in-place"><input type="text" id="mode1-start-city" /></li>
+                        <li class="in-til"><span>目的城市：</span></li>
+                        <li class="in-place"><input type="text" id="mode1-end-city" /></li>
+                        <li class="in-date">
+                            <img class="mode1-date-icon" src="~/images/schedule.png" />
+                            <input type="date" id="mode1-date" />
+                        </li>
+                        <li>
+                            <img class="btn-search" id="mode1-btn-search" src="~/images/search.png" />
+                        </li>
+                    </ul>
+                    <div class="mode-1-content">
+                        <div id="mode-1-map"></div>
+                        <div class="mode-1-carpools-wrap">
+                            <ul class="mode-1-list-head-desc">
+                                <li class="mode-1-til">最新拼车信息</li>
+                                <li class="mode-1-desc">
+                                    <span class="mode-1-desc-til">图释：</span>
+                                    <span class="mode-1-desc-owner">车主</span>
+                                    <span class="mode-1-desc-custome">乘客</span>
+                                </li>
+                            </ul>
+                            <table class="mode-1-car-pool-list">
+                                <tr>
+                                    <th>类型</th>
+                                    <th>出发日期</th>
+                                    <th>费用</th>
+                                    <th>车型</th>
+                                    <th>出发城市</th>
+                                    <th>目地城市</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr v-for="item in carpool_list">
+                                    <td>{{item.type}}</td>
+                                    <td>{{item.starttime}}</td>
+                                    <td>{{item.price}}</td>
+                                    <td>{{item.cartype}}</td>
+                                    <td>{{item.startcity}}</td>
+                                    <td>{{item.endcity}}</td>
+                                    <td>{{item.option}}</td>
+                                </tr>
+                            </table>
+                            <div class="mode-1-page-wrap">
+                                <ul class="mode-1-pages">
+                                    <li>
+                                        <img class="mode-1-page-up" src="~/images/left.png" />
+                                    </li>
+                                    <li>
+                                        <img class="mode-1-page-down" src="~/images/right.png" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        @RenderPage("~/footer.cshtml")
+    </div>
+</body>
+</html>

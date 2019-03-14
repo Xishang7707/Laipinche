@@ -124,9 +124,22 @@
     <Content Include="css\register.min.css">
       <DependentUpon>register.css</DependentUpon>
     </Content>
+    <Content Include="css\startcarpool.css">
+      <DependentUpon>startcarpool.less</DependentUpon>
+    </Content>
+    <Content Include="css\startcarpool.min.css">
+      <DependentUpon>startcarpool.css</DependentUpon>
+    </Content>
+    <Content Include="images\clock.png" />
+    <Content Include="images\clock2.png" />
     <Content Include="images\error.png" />
+    <Content Include="images\icon.gif" />
+    <Content Include="images\icon2.png" />
+    <Content Include="images\ico_type_car.gif" />
+    <Content Include="images\ico_type_man.gif" />
     <Content Include="images\info.png" />
     <Content Include="images\close.png" />
+    <Content Include="images\left.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\ok.png" />
     <Content Include="images\pic1.jpg" />
@@ -135,7 +148,12 @@
     <Content Include="images\pic4.jpg" />
     <Content Include="images\pic5.jpg" />
     <Content Include="images\pic6.jpg" />
+    <Content Include="images\pic7.jpg" />
+    <Content Include="images\right.png" />
+    <Content Include="images\schedule.png" />
+    <Content Include="images\search.png" />
     <Content Include="images\tick.png" />
+    <Content Include="images\x.png" />
     <Content Include="Scripts\global.js" />
     <Content Include="Scripts\header.js" />
     <Content Include="Scripts\index.js" />
@@ -143,6 +161,7 @@
     <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
     <Content Include="Scripts\jsencrapy.js" />
     <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\startcarpool.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="Web.config" />
@@ -164,8 +183,11 @@
     <Content Include="css\footer.less" />
     <Content Include="css\register.less" />
     <Content Include="css\login.less" />
+    <Content Include="css\startcarpool.less" />
     <None Include="packages.config" />
     <Content Include="register.cshtml" />
+    <Content Include="startcarpool.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -173,9 +195,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="images\login\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

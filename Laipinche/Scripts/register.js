@@ -1,8 +1,4 @@
-﻿var win = $(window)
-var bll_url = 'http://localhost:50843/api/'
-var page_min_width = 720;
-
-function init() {
+﻿function init() {
     document.oncontextmenu = () => { return false };
     document.onselectstart = () => { return false };
     $('img').on('dragstart', function (event) { event.preventDefault(); });
@@ -206,12 +202,12 @@ var form_model = {
                     {
                         if (this.verify_username(2) && this.verify_username(3))
                             send_data({
-                                url: bll_url + "verify/exists",
+                                url: api_url + "verify/exists",
                                 data: { username: this.username, type: 0 },
                                 callback: (in_data) => {
-                                    var data = JSON.parse(in_data);
+                                    //var data = in_data['data'];
 
-                                    if (data != null && data['code'] == 1)
+                                    if (in_data != null && in_data['code'] == 1)
                                         this.exist_username = true;
                                     else this.exist_username = false;
                                 }
@@ -283,11 +279,11 @@ var form_model = {
                 case 3:
                     if (this.verify_idcard(2))
                         send_data({
-                            url: bll_url + "verify/exists",
+                            url: api_url + "verify/exists",
                             data: { idcard: this.idcard, type: 1 },
                             callback: (in_data) => {
-                                data = JSON.parse(in_data);
-                                if (data['code'] == 1) {
+                                //data = JSON.parse(in_data);
+                                if (in_data['code'] == 1) {
                                     this.exist_idcard = true;
                                 } else {
                                     this.exist_idcard = false;
@@ -312,11 +308,11 @@ var form_model = {
                 case 3://手机号码被注册
                     if (this.verify_tel(2))
                         send_data({
-                            url: bll_url + "verify/exists",
+                            url: api_url + "verify/exists",
                             data: { tel: this.tel, type: 2 },
                             callback: (in_data) => {
-                                data = JSON.parse(in_data);
-                                if (data['code'] == 1) {
+                                //data = JSON.parse(in_data);
+                                if (in_data['code'] == 1) {
                                     this.exist_tel = true;
                                 } else {
                                     this.exist_tel = false;
@@ -359,14 +355,14 @@ var form_model = {
             //当手机号码没有被注册
             if (this.exist_tel == false) {
                 send_data({
-                    url: bll_url + "communicate/sendtelcode",
+                    url: api_url + "communicate/sendtelcode",
                     data: { tel: this.tel },
                     callback: function (in_data) {
-                        var data = JSON.parse(in_data);
-                        if (data['code'] == 200) {
+                        //var data = JSON.parse(in_data);
+                        if (in_data['code'] == 200) {
                             _this.val("发送成功");
 
-                        } else alert(data["status"])
+                        } else alert(in_data["status"])
                     }
                 });
 
@@ -433,21 +429,21 @@ var form_model = {
             var btn_register = $("#register");
             btn_register.val("请稍等．．．");
             send_data({
-                url: bll_url + "users/register",
+                url: api_url + "users/register",
                 data: { username: this.username, password: this.password, name: this.name, idcard: this.idcard, tel: this.tel, telcode: this.telcode },
                 type: "POST",
                 callback: (in_data) => {
-                    var data = JSON.parse(in_data);
-                    if (data['code'] == 200) {
+                    //var data = in_data['data'];
+                    if (in_data['code'] == 200) {
                         btn_register.val("注册成功");
                         setTimeout(function () {
                             location.reload();
                         }, 2000);
                     }
                     else {
-                        if (data['code'] == 10004)
+                        if (in_data['code'] == 10004)
                             this.is_true_telcode = 1;
-                        else if (data['code'] == 10005)
+                        else if (in_data['code'] == 10005)
                             this.is_true_telcode = 2;
                         else btn_register.val("注册失败,请检查信息");
                         this.is_submit = false;

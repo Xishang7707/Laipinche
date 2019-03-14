@@ -14,7 +14,7 @@ namespace Laipinche.BLL
         /// <param name="in_data"></param>
         /// <returns></returns>
         [HttpPost]
-        public string Register(dynamic in_data)
+        public JObject Register(dynamic in_data)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Laipinche.BLL
             }
             catch (Exception e)
             {
-                return SendData(400, data: e.ToString());
+                return SendData(400);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Laipinche.BLL
         /// <param name="in_data"></param>
         /// <returns></returns>
         [HttpPost]
-        public string Login(dynamic in_data)
+        public JObject Login(dynamic in_data)
         {
             try
             {
@@ -109,12 +109,13 @@ namespace Laipinche.BLL
                 string login_result = UserDAL.Login(us);
                 if (login_result == null)
                     return SendData(10010);
-                Session["ssid"] = login_result;
+                Session["LPCSSID"] = login_result;
                 //HttpCookie sid_acs_cookie = new HttpCookie("ssid", login_result);
                 //sid_acs_cookie.Expires = DateTime.Now.AddMonths(1);
                 //Response.SetCookie(sid_acs_cookie);
-
-                return SendData(200, data: login_result);
+                JObject ret_json = new JObject();
+                ret_json.Add("LPCSSID", login_result);
+                return SendData(200, data: ret_json);
             }
             catch (Exception)
             {
@@ -127,7 +128,7 @@ namespace Laipinche.BLL
         /// <param name="in_data"></param>
         /// <returns>用户基本信息</returns>
         [HttpPost]
-        public string GetInfo(dynamic in_data)
+        public JObject GetInfo(dynamic in_data)
         {
             try
             {
@@ -135,16 +136,22 @@ namespace Laipinche.BLL
                 //验证请求是否过期
                 if (!Vertify_time(data["t"]?.ToString(), Config.Config.Timeout))
                     return SendData(403);
-                string ssid = data["ssid"]?.ToString();
+                string ssid = data["LPCSSID"]?.ToString();
                 if (!VerifyAuthorization(ssid))
                     return SendData(10011);
                 JObject acs_json = ToolsDAL.DecryptPasswordKey(ssid);
                 string us_id = acs_json["id"]?.ToString();
                 if (us_id == null)
                     return SendData(10011);
-                string ret_data = UserDAL.GetUserInfo(us_id);
-                if (ret_data == null)
+                JObject us_json = UserDAL.GetInfo(us_id);
+                JObject ret_data = new JObject();
+                if (us_json == null)
                     return SendData(10011);
+
+                ret_data.Add("username", us_json["username"]);
+                ret_data.Add("name", us_json["name"]);
+                ret_data.Add("type", us_json["type"]);
+
                 return SendData(StatusCode: 200, data: ret_data);
             }
             catch (Exception e)
@@ -152,5 +159,27 @@ namespace Laipinche.BLL
                 return SendData(400, e.ToString());
             }
         }
+        ///// <summary>
+        ///// 获取用户诚信度
+        ///// </summary>
+        ///// <param name="in_data">用户id</param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public string GetUserIntegrity(dynamic in_data)
+        //{
+        //    try
+        //    {
+        //        JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+        //        //验证请求是否过期
+        //        if (!Vertify_time(data["t"]?.ToString(), Config.Config.Timeout))
+        //            return SendData(403);
+        //        string us_id = data["us_id"]
+        //        JObject us_json = UserDAL.GetUserIntegrity()
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return SendData(400);
+        //    }
+        //}
     }
 }

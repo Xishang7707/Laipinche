@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>开始拼车</title>
+    <link href="~/css/startcarpool.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=creGl1m1QdF4GxrBoNLNYvlbEIZCIcLi"></script>
+    <script src="~/Scripts/global.js"></script>
+    <script src="~/Scripts/startcarpool.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="wrapper">
+            @RenderPage("~/header.cshtml", new { head_font_color = "#fff" })
+        </div>
+    </div>
+    <div class="page" style="background-image: url('images/pic7.jpg'); background-size:100% 100%;">
+        <div class="wrapper" style="background:linear-gradient(rgba(0, 0, 0, 0.00), #fff)">
+            <div class="content-wrap" id="mode-1">
+                <ul class="mode-menu">
+                    <li><a class="cur" href="#" v-on:click="longtrip">长途拼车</a></li>
+                    <li><a href="#">上下班拼车</a></li>
+                    <li><a href="#">拼车关注</a></li>
+                </ul>
+                <span class="mode-adv">智能并精确计算出拼车路程、油费和高速路桥费</span>
+                <div class="mode mode-1">
+                    <ul class="mode-search">
+                        <li class="in-til"><span>出发城市：</span></li>
+                        <li class="in-place"><input type="text" id="mode1-start-city" /></li>
+                        <li class="in-til"><span>目的城市：</span></li>
+                        <li class="in-place"><input type="text" id="mode1-end-city" /></li>
+                        <li class="in-date">
+                            <img class="mode1-date-icon" src="~/images/schedule.png" />
+                            <input type="date" id="mode1-date" />
+                        </li>
+                        <li>
+                            <img class="btn-search" id="mode1-btn-search" v-on:click="search" src="~/images/search.png" />
+                        </li>
+                    </ul>
+                    <div class="mode-1-content">
+                        <div id="mode-1-map"></div>
+                        <div class="mode-1-carpools-wrap" id="mode-1-carpools">
+                            <ul class="mode-1-list-head-desc">
+                                <li class="mode-1-til">最新拼车信息</li>
+                                <li class="mode-1-desc">
+                                    <span class="mode-1-desc-til">图释：</span>
+                                    <span class="mode-1-desc-owner">车主</span>
+                                    <span class="mode-1-desc-custome">乘客</span>
+                                </li>
+                            </ul>
+                            <table class="mode-1-car-pool-list">
+                                <tr>
+                                    <th>类型</th>
+                                    <th>出发日期</th>
+                                    <th>费用</th>
+                                    <th>车型</th>
+                                    <th>出发城市</th>
+                                    <th>目地城市</th>
+                                    <th>操作</th>
+                                </tr>
+                                <tr v-for="item in carpool_list">
+                                    <td>
+
+                                        <img v-if="item.or_type==1" src="~/images/ico_type_car.gif" />
+                                        <img v-else src="~/images/ico_type_man.gif" />
+                                    </td>
+                                    <td>{{parse_pagelist_date(item.starttime)}}</td>
+                                    <td v-if="item.paytype==0" class="paytype-free">免费</td>
+                                    <td v-else-if="item.paytype==1" class="paytype-negotiable">面议</td>
+                                    <td v-else-if="item.paytype==2" class="paytype-price">¥{{item.price}}</td>
+                                    <td>{{cartype[item.cartype-1]}}</td>
+                                    <td>{{item.from}}</td>
+                                    <td>{{item.to}}</td>
+                                    <td>
+                                        <a v-if="item.or_type==1" v-on:click="getorderinfo(item.id)" class="order-operation" href="#">申请加入</a>
+                                        <a v-else-if="item.or_type==0" v-on:click="getorderinfo(item.id)" class="order-operation" href="#">邀请加入</a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="mode-1-page-wrap">
+                                <ul class="mode-1-pages">
+                                    <li v-if="curpage!=1" v-on:click="check_page(curpage-1)">
+                                        <img class="mode-1-page-up" src="~/images/left.png" />
+                                    </li>
+                                    <li v-for="index in (pagecount)">
+                                        <span v-if="index==curpage" v-on:click="check_page(index)" class="mode-1-page-id cur">{{index}}</span>
+                                        <span v-else v-on:click="check_page(index)" class="mode-1-page-id">{{index}}</span>
+                                    </li>
+                                    <li v-if="curpage!=pagecount&&pagecount!=0" v-on:click="check_page(curpage+1)">
+                                        <img class="mode-1-page-down" src="~/images/right.png" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div :key="orderdetailsid" id="mode-1-carpools-details" class="mode-1-carpool-details-wrap">
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">信息状态：</span>
+                                <span class="mode-1-details-msgstate-ok">{{order_details['state']==0?'有效':'无效'}}</span>
+                                <a href="#" class="mode-1-details-report">举报此信息</a>
+                            </div>
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">出发城市：</span>
+                                <span class="mode-1-details-city">{{order_details['from']}}</span>
+                                <div class="mode-1-deails-icon-to"></div>
+                                <span class="mode-1-details-title">目的城市：</span>
+                                <span class="mode-1-details-city">{{order_details['to']}}</span>
+                            </div>
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">出发时间：</span>
+                                <span class="mode-1-details-starttime">{{order_details['starttime']}}</span>
+                            </div>
+                            <hr />
+                            @* ---------------------------------------------------------------------------------------------------------------------------------------------------------- *@
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">总路程约：</span>
+                                <span class="mode-1-details-mag">{{order_details['distance']/1000}}公里</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">汽油费：</span>
+                                <span class="mode-1-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">路桥费：</span>
+                                <span class="mode-1-details-mag">¥0元</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">可容纳人数：</span>
+                                <span class="mode-1-details-mag">{{order_details['capacity']}}人</span>
+                            </div>
+                            <div class="mode-1-details-col">
+                                <span v-if="order_details.or_type==1" class="mode-1-details-title">已报名人数：</span>
+                                <span v-else class="mode-1-details-title">参加人数：</span>
+                                <span class="mode-1-details-mag">{{order_details['applyed']}}人</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人申请加入此拼车</span>
+                            </div>
+                            <div class="mode-1-details-col" style="float:right;" v-else>
+                                <span class="mode-1-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人邀请该乘客</span>
+                            </div>
+
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">汽车类型：</span>
+                                <span class="mode-1-details-mag">{{cartype[order_details['cartype']-1]}}</span>
+                            </div>
+                            <div class="mode-1-details-col">
+                                <span class="mode-1-details-title">费用方式：</span>
+                                <span v-if="order_details['paytype']==0" class="mode-1-details-mag">免费</span>
+                                <span v-else-if="order_details['paytype']==1" class="mode-1-details-mag">面议</span>
+                                <span v-if="order_details['paytype']==2" class="mode-1-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div class="mode-1-details-row">
+                                <span v-if="order_details.or_type==1" class="mode-1-details-mag car-remarks-til">车主留言：</span>
+                                <span v-else class="mode-1-details-mag car-remarks-til">乘客留言：</span>
+                                <br />
+                                <pre class="car-remarks">
+        {{order_details['remarks']}}
+                                        </pre>
+                            </div>
+
+                            <a v-if="order_details.or_type==1" class="mode-1-details-btn" v-on:click="applyfor(order_details['or_id'])" href="#">申请加入</a>
+                            <a v-else class="mode-1-details-btn" v-on:click="applyfor(order_details['or_id'])" href="#">邀请加入</a>
+                            <a v-if="order_details.or_type==1" class="mode-1-details-btn" v-on:click="gettel" href="#">获取司机联系手机</a>
+                            <a v-else class="mode-1-details-btn" v-on:click="gettel" href="#">获取乘客联系手机</a>
+                            <div class="mode-1-details-msg">
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">发布用户：</span>
+                                        <span class="mode-1-details-msg-content">{{order_details['name']}}</span>
+                                    </div>
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">认证情况：</span>
+                                        <div class="mode-1-details-msg-legalize-tel"></div>
+                                    </div>
+                                </div>
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">诚信指数：</span>
+                                        <span v-if="order_details['integrity']==0" class="mode-1-details-msg-integrity-non">诚信指数未知</span>
+                                        <span v-else-if="order_details['integrity']>=7" class="mode-1-details-msg-integrity-ok">诚信指数高</span>
+                                        <span v-else-if="order_details['integrity']<7" class="mode-1-details-msg-integrity-bad">诚信指数低</span>
+                                    </div>
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">拼车编号：</span>
+                                        <div class="mode-1-details-msg-id">{{order_details['or_id']}}</div>
+                                    </div>
+                                </div>
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">发布时间：</span>
+                                        <span class="mode-1-details-msg-content">{{order_details['time']}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mode mode-2">
+                    <div>
+                        <div>
+                            <ul>
+                                <li class="cur-city">长沙</li>
+                                <li class="cur-city">[<a href="#">切换城市</a>]</li>
+                                <li class="cur-city">上下班拼车为上下班搭车，顺风车</li>
+                            </ul>
+                            <div>
+                                <ul>
+                                    <li>出发地址：</li>
+                                    <li>
+                                        <label for="from_radio">
+                                            <input id="from_radio" type="radio" />
+                                            <input id="from_radio" type="text" placeholder="12312313" />
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mode-2-map">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        @RenderPage("~/footer.cshtml")
+    </div>
+</body>
+</html>

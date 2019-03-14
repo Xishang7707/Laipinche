@@ -12,7 +12,7 @@ namespace Laipinche.BLL.API
         /// 发送短信验证码
         /// </summary>
         [HttpPost]
-        public string SendTelCode(dynamic in_data)
+        public JObject SendTelCode(dynamic in_data)
         {
             try
             {

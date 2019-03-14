@@ -15,7 +15,7 @@ namespace Laipinche.BLL
         /// 1.存在
         /// </returns>
         [HttpPost]
-        public string Exists(dynamic in_data)
+        public JObject Exists(dynamic in_data)
         {
             try
             {

@@ -1,42 +1,42 @@
-﻿namespace Laipinche.Model
+﻿using System.Data;
+
+namespace Laipinche.Model
 {
     public class Car
     {
-        int                 id;             //id
-        int                 us_id;          //用户id
-        string              name;           //车名
-        string              idcard;         //车牌号
-        int                 type;           //车辆类型
-        int                 capacity;       //最大乘客数
-        string              time;           //注册时间数量
-
         /// <summary>
         /// id
         /// </summary>
-        public int Id { get => id; set => id = value; }
+        public string Id { get; set; }
         /// <summary>
         /// 用户id
         /// </summary>
-        public int Us_id { get => us_id; set => us_id = value; }
+        public string Us_id { get; set; }
         /// <summary>
         /// 车名
         /// </summary>
-        public string Name { get => name; set => name = value; }
+        public string Name { get; set; }
         /// <summary>
         /// 车牌号
         /// </summary>
-        public string IdCard { get => idcard; set => idcard = value; }
+        public string IdCard { get; set; }
         /// <summary>
         /// 车辆类型
+        /// 1.轿车
+        /// 2.MPV
+        /// 3.SUV
+        /// 4.跑车
+        /// 5.客车
+        /// 6.其他
         /// </summary>
-        public int Type_id { get => type; set => type = value; }
+        public string Type { get; set; }
         /// <summary>
         /// 最大乘客数
         /// </summary>
-        public int Capacity { get => capacity; set => capacity = value; }
+        public string Capacity { get; set; }
         /// <summary>
         /// 注册时间
         /// </summary>
-        public string Time { get => time; set => time = value; }
+        public string Time { get; set; }
     }
 }

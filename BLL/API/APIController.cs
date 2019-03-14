@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -33,23 +33,29 @@ namespace Laipinche.BLL
         /// </summary>
         protected static Dictionary<int, string> ReturnCodeState = new Dictionary<int, string>
         {
-            {0, "否"                      },
-            {1, "是"                      },
-            {200, "成功"                  },
-            {400, "请求错误"              },
-            {403, "请求过期"              },
-            {408, "请求超时"              },
-            {10001, "用户名已被注册"      },
-            {10002, "密码格式错误"        },
-            {10004, "手机验证码错误"      },
-            {10005, "手机验证码过期"      },
-            {10006, "请60秒后再次发送短信"},
-            {10007, "短信发送失败"        },
-            {10008, "姓名格式错误"        },
-            {10009, "身份证格式错误"      },
-            {10010, "登录失败"            },
-            {10011, "未授权访问"          },
-            {20000, "服务错误"            }
+            {0, "否"                                 },
+            {1, "是"                                 },
+            {200, "成功"                             },
+            {400, "请求错误"                         },
+            {403, "请求过期"                         },
+            {408, "请求超时"                         },
+
+            {10001, "用户名已被注册"                 },
+            {10002, "密码格式错误"                   },
+            {10004, "手机验证码错误"                 },
+            {10005, "手机验证码过期"                 },
+            {10006, "请60秒后再次发送短信"           },
+            {10007, "短信发送失败"                   },
+            {10008, "姓名格式错误"                   },
+            {10009, "身份证格式错误"                 },
+            {10010, "登录失败"                       },
+            {10011, "未授权访问"                     },
+
+            {11001, "不能将自己加入自己的拼车中"     },
+            {11002, "已经加入到拼车中"               },
+            {11003, "不是司机，不能邀请"             },
+
+            {20000, "服务错误"                       }
         };
 
         /// <summary>
@@ -59,18 +65,29 @@ namespace Laipinche.BLL
         /// <param name="status">状态信息</param>
         /// <param name="data">数据</param>
         [NonAction]
-        protected string SendData(int StatusCode = 200, string Status = "成功", string data = null)
+        //protected string SendData(int StatusCode = 200, string Status = "成功", string data = null)
+        //{
+        //    string status = ReturnCodeState[StatusCode] == null ? Status : ReturnCodeState[StatusCode];
+
+        //    var ret_data = new
+        //    {
+        //        code = StatusCode,
+        //        status = status,
+        //        data = data
+        //    };
+        //    return JsonConvert.SerializeObject(ret_data);
+        //}
+        protected JObject SendData(int StatusCode = 200, string Status = "成功", JObject data = null)
         {
             string status = ReturnCodeState[StatusCode] == null ? Status : ReturnCodeState[StatusCode];
 
-            var ret_data = new
-            {
-                code = StatusCode,
-                status = status,
-                data = data
-            };
-            return JsonConvert.SerializeObject(ret_data);
+            JObject json = new JObject();
+            json.Add("code", StatusCode);
+            json.Add("status", status);
+            json.Add("data", data);
+            return json;
         }
+
         /// <summary>
         /// 验证时间戳
         /// </summary>
@@ -138,7 +155,7 @@ namespace Laipinche.BLL
         /// <returns></returns>
         public bool VerifyAuthorization(string in_acsid)
         {
-            string acsid = Session["ssid"]?.ToString();
+            string acsid = Session["LPCSSID"]?.ToString();
             if (acsid == null)
                 return false;
             if (acsid == in_acsid)

@@ -2,57 +2,80 @@
 {
     public class Order
     {
-        public enum OrderState
-        {
-
-        };
-
-        public enum PaymentMethod
-        {
-            /// <summary>
-            /// 免费
-            /// </summary>
-            Free,
-            /// <summary>
-            /// 面议
-            /// </summary>
-            Negotiable,
-            /// <summary>
-            /// 一口价
-            /// </summary>
-            Price
-        };
-
-        string id;                 //id
-        string us_id;              //司机id
-        string from;               //起点
-        string way;                //途径
-        string to;                 //目的地
-        string startTime;          //出发时间
-        bool isRet;              //是否返程
-        string retTime;            //返程时间
-        string remarks;            //备注
-        PaymentMethod payType;            //支付方式
-        double price;              //总价格
-        //double            rating;             //评价==>由详细订单统计而来
-        OrderState state;              //订单状态
-        string time;               //订单创建时间
-
-
-
-        public string Id { get => id; set => id = value; }
-        public string Us_id { get => us_id; set => us_id = value; }
-        public string From { get => from; set => from = value; }
-        public string Way { get => way; set => way = value; }
-        public string To { get => to; set => to = value; }
-        public string StartTime { get => startTime; set => startTime = value; }
-        public bool IsRet { get => isRet; set => isRet = value; }
-        public string RetTime { get => retTime; set => retTime = value; }
-        public string Remarks { get => remarks; set => remarks = value; }
-        public PaymentMethod PayType { get => payType; set => payType = value; }
-        public double Price { get => price; set => price = value; }
-        public OrderState State { get => state; set => state = value; }
-        public string Time { get => time; set => time = value; }
+        /// <summary>
+        /// ID
+        /// </summary>
+        public string Id { get; set; }
+        /// <summary>
+        /// 司机id
+        /// </summary>
+        public string Us_id { get; set; }
+        /// <summary>
+        /// 起点
+        /// </summary>
+        public string From { get; set; }
+        /// <summary>
+        /// 途径
+        /// </summary>
+        public string Way { get; set; }
+        /// <summary>
+        /// 目的地
+        /// </summary>
+        public string To { get; set; }
+        /// <summary>
+        /// 出发时间
+        /// </summary>
+        public string StartTime { get; set; }
+        /// <summary>
+        /// 是否返程
+        /// 0.否
+        /// 1.是
+        /// </summary>
+        public string IsRet { get; set; }
+        /// <summary>
+        /// 返程时间
+        /// </summary>
+        public string RetTime { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remarks { get; set; }
+        /// <summary>
+        /// 支付方式
+        /// 0.免费
+        /// 1.面议
+        /// 2.一口价
+        /// </summary>
+        public string PayType { get; set; }
+        /// <summary>
+        /// 总价格
+        /// </summary>
+        public string Price { get; set; }
+        /// <summary>
+        /// 订单类型
+        /// 0.长途
+        /// 1.上下班
+        /// </summary>
+        public string Type { get; set; }
+        /// <summary>
+        /// 发布者类型
+        /// 1.乘客
+        /// 2.司机
+        /// </summary>
+        public string Or_type { get; set; }
+        /// <summary>
+        /// 订单状态
+        /// 0.正在进行
+        /// 1.已经开始
+        /// 2.完成
+        /// 3.关闭
+        /// 4.申请中
+        /// </summary>
+        public string State { get; set; }
+        /// <summary>
+        /// 订单创建时间
+        /// </summary>
+        public string Time { get; set; }
 
         public OrderDetail OrderDetail { get; set; }
     }

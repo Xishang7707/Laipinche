@@ -1,0 +1,385 @@
+﻿* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+  color: #000;
+  background-color: transparent;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+input {
+  outline: none;
+}
+::-webkit-inner-spin-button {
+  visibility: hidden;
+}
+.header {
+  width: 100%;
+  min-width: 1200px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  overflow: hidden;
+  z-index: 100;
+}
+.header .wrapper {
+  overflow: hidden;
+  width: 70%;
+  min-width: 1200px;
+  height: 50px;
+  margin: 0 auto;
+  position: absolute;
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.page {
+  min-width: 1200px;
+  width: 100%;
+  position: relative;
+}
+.page .content-wrap {
+  width: 1200px;
+  overflow: hidden;
+  position: absolute;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+.page .content-wrap .mode-menu li {
+  float: left;
+}
+.page .content-wrap .mode-menu li a {
+  width: 120px;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  margin: 0 20px;
+  color: #fff;
+}
+.page .content-wrap .mode-menu li a:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-menu li a:active {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.page .content-wrap .mode-menu li a.cur {
+  background-color: #09f;
+}
+.page .content-wrap .mode-menu li a.cur:hover {
+  background-color: #09f;
+}
+.page .content-wrap .mode-menu li a.cur:active {
+  background-color: #09f;
+}
+.page .content-wrap .mode-adv {
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  color: #7cf;
+}
+.page .content-wrap .mode {
+  width: 1200px;
+}
+.page .content-wrap .mode-1 {
+  display: none;
+  margin: 17px 0;
+}
+.page .content-wrap .mode-1 .mode-search {
+  overflow: hidden;
+  margin: 13px 0;
+}
+.page .content-wrap .mode-1 .mode-search li {
+  float: left;
+  position: relative;
+}
+.page .content-wrap .mode-1 .mode-search .in-til > span {
+  color: #fff;
+  line-height: 37px;
+  height: 37px;
+  display: block;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-1 .mode-search li > input {
+  height: 35px;
+  padding-left: 7px;
+  font-size: 17px;
+  color: #fff;
+  border: 1px solid #ddd;
+  transition: 0.1s all linear;
+}
+.page .content-wrap .mode-1 .mode-search li > input:hover {
+  border-color: #fff;
+}
+.page .content-wrap .mode-1 .mode-search li > input:focus {
+  border-color: #09f;
+}
+.page .content-wrap .mode-1 .mode-search .mode1-date-icon {
+  width: 29px;
+  padding: 4px;
+  float: left;
+  margin-left: 20px;
+}
+.page .content-wrap .mode-1 .mode-search .in-date > input {
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-search .btn-search {
+  width: 37px;
+  height: 37px;
+  margin: 0 30px;
+  cursor: pointer;
+}
+.page .content-wrap .mode-1 .mode-1-content #mode-1-map {
+  width: 500px;
+  height: 500px;
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content #mode-1-map .BMap_cpyCtrl {
+  display: none;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap {
+  width: 680px;
+  float: right;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc {
+  width: 100%;
+  overflow: hidden;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc li {
+  float: left;
+  height: 22px;
+  margin: 0 15px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc .mode-1-til {
+  font-weight: bold;
+  color: #fff;
+  line-height: 22px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc .mode-1-desc .mode-1-desc-til {
+  font-size: 13px;
+  line-height: 22px;
+  color: #ccc;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc .mode-1-desc .mode-1-desc-owner {
+  background: url('../images/ico_type_car.gif') no-repeat;
+  height: 22px;
+  color: #0f0;
+  margin: 0 13px;
+  padding-left: 40px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-list-head-desc .mode-1-desc .mode-1-desc-custome {
+  background: url('../images/ico_type_man.gif') no-repeat;
+  height: 22px;
+  color: #f00;
+  padding-left: 40px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr:first-child {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr th {
+  padding: 7px 0;
+  color: #fff;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr td {
+  color: #fff;
+  text-align: center;
+  padding: 7px 0;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr .paytype-free {
+  color: #f00;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr .paytype-negotiable {
+  color: #0f0;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr .paytype-price {
+  color: #fff;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr .order-operation {
+  color: #09f;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr:not(:first-child):nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr:not(:first-child):nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr:not(:first-child):hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap {
+  margin: 13px 0;
+  position: relative;
+  height: 25px;
+  text-align: center;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap .mode-1-pages {
+  display: inline-block;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap .mode-1-pages li {
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap .mode-1-pages li img {
+  width: 25px;
+  cursor: pointer;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap .mode-1-pages li .mode-1-page-id {
+  display: block;
+  text-align: center;
+  line-height: 25px;
+  width: 25px;
+  height: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-page-wrap .mode-1-pages li .mode-1-page-id.cur {
+  color: #09f;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap {
+  width: 680px;
+  float: right;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-row {
+  overflow: hidden;
+  margin: 13px 0;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-title {
+  color: #ccc;
+  font-size: 14px;
+  float: left;
+  height: 21px;
+  line-height: 21px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msgstate-ok {
+  color: #0f0;
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-report {
+  padding-left: 20px;
+  background: url('../images/icon.gif') no-repeat 0 -492px;
+  color: #09f;
+  float: right;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-deails-icon-to {
+  width: 200px;
+  height: 21px;
+  background: url('../images/x.png') no-repeat -1460px -790px;
+  float: left;
+  margin: 0 35px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-city {
+  float: left;
+  color: #fff;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-mag {
+  float: left;
+  color: #fff;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-starttime {
+  padding-left: 20px;
+  height: 21px;
+  line-height: 21px;
+  color: #fff;
+  background: url('../images/clock2.png') no-repeat;
+  background-size: 16px;
+  /*background: url(../images/icon.gif) no-repeat 0 -527px;*/
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-col {
+  margin: 7px 0;
+  width: 226px;
+  overflow: hidden;
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .car-remarks-til {
+  background: url('../images/ico_type_car.gif') no-repeat;
+  padding-left: 40px;
+  color: #ccc;
+  font-size: 14px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .car-remarks {
+  color: #fff;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-btn {
+  display: inline-block;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 7px 13px;
+  margin: 13px 0;
+  margin-right: 13px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-btn:active {
+  background: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-row {
+  overflow: hidden;
+  margin: 13px 0;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-col {
+  float: left;
+  width: 300px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-title {
+  color: #fff;
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-content {
+  color: #fff;
+  display: block;
+  height: 21px;
+  line-height: 21px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-legalize-tel {
+  width: 21px;
+  height: 21px;
+  background: url(../images/icon2.png) no-repeat -27px 0px;
+  background-size: 130px;
+  float: left;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-integrity-ok {
+  background: url('../images/icon.gif') no-repeat 0 -431px;
+  color: #0f0;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-integrity-non {
+  background: url('../images/icon.gif') no-repeat 0 -400px;
+  color: #ff0;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-integrity-bad {
+  background: url('../images/icon.gif') no-repeat 0 -367px;
+  color: #f00;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-id {
+  height: 21px;
+  line-height: 21px;
+  color: #fff;
+}
+.page .content-wrap .mode-2 {
+  margin: 17px 0;
+  /*display:none;*/
+}
+#mode-1-carpools {
+  display: block;
+}
+#mode-1-carpools-details {
+  display: none;
+}

@@ -1,0 +1,453 @@
+﻿@import "global";
+
+.header {
+    width: 100%;
+    min-width: @page_min_width;
+    height: @header_height;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    overflow: hidden;
+    z-index: 100;
+
+    .wrapper {
+        overflow: hidden;
+        width: 70%;
+        min-width: @page_min_width;
+        height: @header_height;
+        margin: 0 auto;
+        position: absolute;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.page {
+    min-width: @page_min_width;
+    width: 100%;
+    position: relative;
+
+    .content-wrap {
+        width: @page_min_width;
+        overflow: hidden;
+        position: absolute;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, .45);
+
+        .mode-menu {
+            li {
+                float: left;
+
+                a {
+                    width: 120px;
+                    background-color: rgba(0, 0, 0, .4);
+                    display: block;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    margin: 0 20px;
+                    color: #fff;
+                }
+
+                a:hover {
+                    background-color: rgba(0,0,0,.5)
+                }
+
+                a:active {
+                    background-color: rgba(0,0,0,.7)
+                }
+
+                a.cur {
+                    background-color: #09f;
+                }
+
+                a.cur:hover {
+                    background-color: #09f;
+                }
+
+                a.cur:active {
+                    background-color: #09f;
+                }
+            }
+        }
+
+        .mode-adv {
+            display: block;
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            color: #7cf;
+        }
+
+        .mode {
+            width: @page_min_width;
+        }
+        //长途拼车
+        .mode-1 {
+            display: none;
+            margin: 17px 0;
+            //---------------搜索
+            .mode-search {
+                overflow: hidden;
+                margin: 13px 0;
+
+                li {
+                    float: left;
+                    position: relative;
+                }
+
+                .in-til > span {
+                    color: #fff;
+                    line-height: 37px;
+                    height: 37px;
+                    display: block;
+                    padding-left: 20px;
+                }
+
+                li > input {
+                    height: 35px;
+                    padding-left: 7px;
+                    font-size: 17px;
+                    color: #fff;
+                    border: 1px solid #ddd;
+                    transition: .1s all linear;
+                }
+
+                li > input:hover {
+                    border-color: #fff;
+                }
+
+                li > input:focus {
+                    border-color: #09f;
+                }
+
+                .mode1-date-icon {
+                    width: 29px;
+                    padding: 4px;
+                    float: left;
+                    margin-left: 20px;
+                }
+
+                .in-date > input {
+                    float: left;
+                }
+
+                .btn-search {
+                    width: 37px;
+                    height: 37px;
+                    margin: 0 30px;
+                    cursor: pointer;
+                }
+            }
+
+            .mode-1-content {
+                #mode-1-map {
+                    width: 500px;
+                    height: 500px;
+                    float: left;
+
+                    .BMap_cpyCtrl {
+                        display: none;
+                    }
+                }
+
+                .mode-1-carpools-wrap {
+                    width: 680px;
+                    float: right;
+                    //表头描述
+                    .mode-1-list-head-desc {
+                        width: 100%;
+                        overflow: hidden;
+
+                        li {
+                            float: left;
+                            height: 22px;
+                            margin: 0 15px;
+                        }
+
+                        .mode-1-til {
+                            font-weight: bold;
+                            color: #fff;
+                            line-height: 22px;
+                        }
+                        //图释
+                        .mode-1-desc {
+                            .mode-1-desc-til {
+                                font-size: 13px;
+                                line-height: 22px;
+                                color: #ccc;
+                            }
+
+                            .mode-1-desc-owner {
+                                background: url('../images/ico_type_car.gif') no-repeat;
+                                height: 22px;
+                                color: #0f0;
+                                margin: 0 13px;
+                                padding-left: 40px;
+                            }
+
+                            .mode-1-desc-custome {
+                                background: url('../images/ico_type_man.gif') no-repeat;
+                                height: 22px;
+                                color: #f00;
+                                padding-left: 40px;
+                            }
+                        }
+                    }
+                    //数据列表
+                    .mode-1-car-pool-list {
+                        width: 100%;
+                        border-collapse: collapse;
+
+                        tr:first-child {
+                            background-color: rgba(0, 0, 0, .7);
+                        }
+
+                        tr {
+                            th {
+                                padding: 7px 0;
+                                color: #fff;
+                            }
+
+                            td {
+                                color: #fff;
+                                text-align: center;
+                                padding: 7px 0;
+                            }
+
+                            .paytype-free {
+                                color: #f00;
+                            }
+
+                            .paytype-negotiable {
+                                color: #0f0;
+                            }
+
+                            .paytype-price {
+                                color: #fff;
+                            }
+
+                            .order-operation {
+                                color: #09f;
+                            }
+                        }
+
+                        tr:not(:first-child):nth-child(odd) {
+                            background-color: rgba(0, 0, 0, .4);
+                        }
+
+                        tr:not(:first-child):nth-child(even) {
+                            background-color: rgba(0, 0, 0, .3);
+                        }
+
+                        tr:not(:first-child):hover {
+                            background-color: rgba(0,0,0,.5);
+                        }
+                    }
+                    //页码
+                    .mode-1-page-wrap {
+                        margin: 13px 0;
+                        position: relative;
+                        height: 25px;
+                        text-align: center;
+
+                        .mode-1-pages {
+                            display: inline-block;
+
+                            li {
+                                float: left;
+
+                                img {
+                                    width: 25px;
+                                    cursor: pointer;
+                                }
+
+                                .mode-1-page-id {
+                                    display: block;
+                                    text-align: center;
+                                    line-height: 25px;
+                                    width: 25px;
+                                    height: 25px;
+                                    color: #fff;
+                                    cursor: pointer;
+                                }
+
+                                .mode-1-page-id.cur {
+                                    color: #09f;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .mode-1-carpool-details-wrap {
+                    width: 680px;
+                    float: right;
+
+                    .mode-1-details-row {
+                        overflow: hidden;
+                        margin: 13px 0;
+                    }
+
+                    .mode-1-details-title {
+                        color: #ccc;
+                        font-size: 14px;
+                        float: left;
+                        height: 21px;
+                        line-height: 21px;
+                    }
+
+                    .mode-1-details-msgstate-ok {
+                        color: #0f0;
+                        float: left;
+                    }
+
+                    .mode-1-details-report {
+                        padding-left: 20px;
+                        background: url('../images/icon.gif') no-repeat 0 -492px;
+                        color: #09f;
+                        float: right;
+                    }
+
+                    .mode-1-deails-icon-to {
+                        width: 200px;
+                        height: 21px;
+                        background: url('../images/x.png') no-repeat -1460px -790px;
+                        float: left;
+                        margin: 0 35px;
+                    }
+
+                    .mode-1-details-city {
+                        float: left;
+                        color: #fff;
+                    }
+
+                    .mode-1-details-mag {
+                        float: left;
+                        color: #fff;
+                    }
+
+                    .mode-1-details-starttime {
+                        padding-left: 20px;
+                        height: 21px;
+                        line-height: 21px;
+                        color: #fff;
+                        background: url('../images/clock2.png') no-repeat;
+                        background-size: 16px;
+                        /*background: url(../images/icon.gif) no-repeat 0 -527px;*/
+                    }
+
+                    .mode-1-details-col {
+                        margin: 7px 0;
+                        width: 226px;
+                        overflow: hidden;
+                        float: left;
+                    }
+
+                    .car-remarks-til {
+                        background: url('../images/ico_type_car.gif') no-repeat;
+                        padding-left: 40px;
+                        color: #ccc;
+                        font-size: 14px;
+                    }
+
+                    .car-remarks {
+                        color: #fff;
+                    }
+
+                    .mode-1-details-btn {
+                        display: inline-block;
+                        color: #fff;
+                        background: rgba(0, 0, 0, .3);
+                        padding: 7px 13px;
+                        margin: 13px 0;
+                        margin-right: 13px;
+                    }
+
+                    .mode-1-details-btn:hover {
+                        background: rgba(0, 0, 0, .4);
+                    }
+
+                    .mode-1-details-btn:active {
+                        background: rgba(0, 0, 0, .5);
+                    }
+
+                    .mode-1-details-msg {
+                        padding: 20px;
+                        background-color: rgba(0,0,0,.35);
+                    }
+
+                    .mode-1-details-msg-row {
+                        overflow: hidden;
+                        margin: 13px 0;
+                    }
+
+                    .mode-1-details-msg-col {
+                        float: left;
+                        width: 300px;
+                    }
+
+                    .mode-1-details-msg-title {
+                        color: #fff;
+                        float: left;
+                    }
+
+                    .mode-1-details-msg-content {
+                        color: #fff;
+                        display: block;
+                        height: 21px;
+                        line-height: 21px;
+                    }
+
+                    .mode-1-details-msg-legalize-tel {
+                        width: 21px;
+                        height: 21px;
+                        background: url(../images/icon2.png) no-repeat -27px -0px;
+                        background-size: 130px;
+                        float: left;
+                    }
+
+                    .mode-1-details-msg-integrity-ok {
+                        background: url('../images/icon.gif') no-repeat 0 -431px;
+                        color: #0f0;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-integrity-non {
+                        background: url('../images/icon.gif') no-repeat 0 -400px;
+                        color: #ff0;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-integrity-bad {
+                        background: url('../images/icon.gif') no-repeat 0 -367px;
+                        color: #f00;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-id {
+                        height: 21px;
+                        line-height: 21px;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        //上下班拼车
+        .mode-2 {
+            margin: 17px 0;
+            /*display:none;*/
+        }
+    }
+}
+
+#mode-1-carpools {
+    display: block;
+}
+
+#mode-1-carpools-details {
+    display: none;
+}

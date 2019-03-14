@@ -18,18 +18,6 @@ namespace Laipinche.Model
             this.Type = json["type"]?.ToString();
             this.time = json["time"]?.ToString();
         }
-        public User(DataTable dt)
-        {
-            Id = dt.Rows[0]["id"]?.ToString();
-            UserName = dt.Rows[0]["username"]?.ToString();
-            Pwd = dt.Rows[0]["pwd"]?.ToString();
-            Tel = dt.Rows[0]["tel"]?.ToString();
-            Name = dt.Rows[0]["name"]?.ToString();
-            IdCard = dt.Rows[0]["idcard"]?.ToString();
-            Attention = dt.Rows[0]["attention"]?.ToString();
-            Type = dt.Rows[0]["type"]?.ToString();
-            time = dt.Rows[0]["time"]?.ToString();
-        }
 
         string id;             //id
         string userName;       //用户名
@@ -41,18 +29,6 @@ namespace Laipinche.Model
         string attention;      //关注
         string type;           //乘客or司机
         string time;           //注册时间
-
-        public enum UserType
-        {
-            /// <summary>
-            /// 乘客
-            /// </summary>
-            Customer = 0,
-            /// <summary>
-            /// 司机
-            /// </summary>
-            Driver = 1
-        };
 
         /// <summary>
         /// id
@@ -85,6 +61,8 @@ namespace Laipinche.Model
         public string Attention { get => attention; set => attention = value; }
         /// <summary>
         /// 用户类型
+        /// 0.乘客
+        /// 1.司机
         /// </summary>
         public string Type { get => type; set => type = value; }
         /// <summary>

@@ -1,0 +1,245 @@
+﻿@import "global";
+
+.header {
+    width: 100%;
+    min-width: @page_min_width;
+    height: @header_height;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    overflow: hidden;
+    z-index: 100;
+
+    .wrapper {
+        overflow: hidden;
+        width: 70%;
+        min-width: @page_min_width;
+        height: @header_height;
+        margin: 0 auto;
+        position: absolute;
+    }
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.page {
+    min-width: @page_min_width;
+    width: 100%;
+    position: relative;
+
+    .content-wrap {
+        width: @page_min_width;
+        overflow: hidden;
+        position: absolute;
+        padding: 20px;
+        background-color: rgba(0, 0, 0, .3);
+
+        .mode-menu {
+            li {
+                float: left;
+
+                a {
+                    width: 120px;
+                    background-color: rgba(0, 0, 0, .4);
+                    display: block;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    margin: 0 20px;
+                    color: #fff;
+                }
+
+                a:hover {
+                    background-color: rgba(0,0,0,.5)
+                }
+
+                a:active {
+                    background-color: rgba(0,0,0,.7)
+                }
+            }
+        }
+
+        .mode-adv {
+            display: block;
+            height: 50px;
+            line-height: 50px;
+            font-size: 14px;
+            color: #7cf;
+        }
+
+        .mode {
+            width: @page_min_width;
+        }
+
+        .mode-1 {
+            margin: 17px 0;
+            //---------------搜索
+            .mode-search {
+                overflow: hidden;
+                margin: 13px 0;
+
+                li {
+                    float: left;
+                    position: relative;
+                }
+
+                .in-til > span {
+                    color: #fff;
+                    line-height: 37px;
+                    height: 37px;
+                    display: block;
+                    padding-left: 20px;
+                }
+
+                li > input {
+                    height: 35px;
+                    padding-left: 7px;
+                    font-size: 17px;
+                    color: #fff;
+                    border: 1px solid #ddd;
+                    transition: .1s all linear;
+                }
+
+                li > input:hover {
+                    border-color: #fff;
+                }
+
+                li > input:focus {
+                    border-color: #09f;
+                }
+
+                .mode1-date-icon {
+                    width: 29px;
+                    padding: 4px;
+                    float: left;
+                    margin-left: 20px;
+                }
+
+                .in-date > input {
+                    float: left;
+                }
+
+                .btn-search {
+                    width: 37px;
+                    height: 37px;
+                    margin: 0 30px;
+                    cursor: pointer;
+                }
+            }
+
+            .mode-1-content {
+                #mode-1-map {
+                    width: 500px;
+                    height: 500px;
+                    float: left;
+
+                    .BMap_cpyCtrl {
+                        display: none;
+                    }
+                }
+
+                .mode-1-carpools-wrap {
+                    width: 680px;
+                    float: right;
+                    //表头描述
+                    .mode-1-list-head-desc {
+                        width: 100%;
+                        overflow: hidden;
+
+                        li {
+                            float: left;
+                            height: 22px;
+                            margin: 0 15px;
+                        }
+
+                        .mode-1-til {
+                            font-weight: bold;
+                            color: #fff;
+                            line-height: 22px;
+                        }
+                        //图释
+                        .mode-1-desc {
+                            .mode-1-desc-til {
+                                font-size: 13px;
+                                line-height: 22px;
+                                color: #ccc;
+                            }
+
+                            .mode-1-desc-owner {
+                                background: url('../images/ico_type_car.gif') no-repeat;
+                                height: 22px;
+                                color: #0f0;
+                                margin: 0 13px;
+                                padding-left: 40px;
+                            }
+
+                            .mode-1-desc-custome {
+                                background: url('../images/ico_type_man.gif') no-repeat;
+                                height: 22px;
+                                color: #c00;
+                                padding-left: 40px;
+                            }
+                        }
+                    }
+                    //数据列表
+                    .mode-1-car-pool-list {
+                        width: 100%;
+                        border-collapse: collapse;
+
+                        tr:first-child {
+                            background-color: rgba(0, 0, 0, .7);
+                        }
+
+                        tr {
+                            th {
+                                padding: 7px 0;
+                                color: #fff; 
+                            }
+
+                            td {
+                                color: #fff;
+                                text-align: center;
+                                padding: 7px 0;
+                            }
+                        }
+
+                        tr:not(:first-child):nth-child(odd) {
+                            background-color: rgba(0, 0, 0, .4);
+                        }
+
+                        tr:not(:first-child):nth-child(even) {
+                            background-color: rgba(0, 0, 0, .3);
+                        }
+
+                        tr:not(:first-child):hover {
+                            background-color: rgba(0,0,0,.5);
+                        }
+                    }
+                    //页码
+                    .mode-1-page-wrap {
+                        margin: 13px 0;
+                        position: relative;
+                        height: 25px;
+
+                        .mode-1-pages {
+                            overflow: hidden;
+                            position: absolute;
+
+                            li {
+                                float: left;
+
+                                img {
+                                    width: 25px;
+                                    cursor: pointer;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

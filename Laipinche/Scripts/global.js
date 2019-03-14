@@ -3,7 +3,9 @@
 //    "i0iSAruMmDlUzC1CuSpLxoT/QDkKJbAqd7m4J/L2fIFh5FNdPe8t1epxp9aWXjWi" +
 //    "fta5oBBkIw1k4hPJdhaZ5W0SjQH6TIX8EMxfYuC1X+jUWz1Kok0vTmsAsCF5LnY7" +
 //    "+oxr/+ItrFPQPb5w3QIDAQAB";
+var win = $(window);
 var api_url = "http://localhost:50843/api/";
+var page_min_width = 1200;
 var PublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3C3llUq20aWBzBHAib7wIhGV7Pk+7vNOE4Ci2TinoDBA3xcch9nEB52IlghdUTLdk+Z5Wcj5SDjQkPVFMLvUBVGzM9Rv21cckvDcsUNqhDCQdpPxwNsFAeiQcMOyjoo6Q9ZzH4Qd+NbtWMV7kY3lES/AvzoKxGueMiZXa+iSCq50CQ1l7kmcuWaCWygOd7UcqLidg2oCdh1cN547Rv4RJONh771RpdwbnC6OSniLLkXvk5NDWk2r+v1Ngyh72LGuMiiySdhiuEhnMik797eF3cTm6IHKEaXAeYJdgt9G95Xjrj4t7WYxT1jpTYkK7c73RGyAvaDuH8GDlGoKqFJyqwIDAQAB";
 /**
  * 设置position:absolute的水平居中
@@ -67,11 +69,14 @@ function send_data({ url, data, callback }) {
  * @param {any} popup
  */
 function is_login(poplogin = false) {
-    var ssid = $.cookie("ssid");
-    if (ssid == null) {
-        is_login(poplogin);
+    var ssid = $.cookie("LPCSSID");
+
+    if (ssid == null || ssid == "null") {
+        if (poplogin == true)
+            Login_Show();
         return false;
     }
+
     return true;
 }
 /**
@@ -83,11 +88,12 @@ function authorization_data({ url, data, pop = false, callback }) {
         return;
     var to_data = {};
     if (data == null)
-        to_data = { ssid: $.cookie('ssid') };
+        to_data = { 'LPCSSID': $.cookie('LPCSSID') };
     else {
         to_data = data;
-        to_data['ssid'] = $.cookie('ssid');
+        to_data['LPCSSID'] = $.cookie('LPCSSID');
     }
+
     send_data({
         url: url,
         data: to_data,

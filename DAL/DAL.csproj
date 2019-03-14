@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarDAL.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="OrderDAL.cs" />
+    <Compile Include="OrderDetailDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolsDAL.cs" />
     <Compile Include="UserDAL.cs" />

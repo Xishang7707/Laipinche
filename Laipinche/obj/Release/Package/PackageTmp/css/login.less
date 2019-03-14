@@ -1,0 +1,120 @@
+﻿@import "global";
+
+#login_form {
+    width: 500px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .55);
+    position: fixed;
+    display: none;
+
+    .login_title {
+        font-size: 30px;
+        text-align: center;
+        padding: 30px 0;
+        color: #fff;
+        cursor: default;
+    }
+
+    #login_form_close {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 13px;
+        transition: .1s all linear;
+        cursor: pointer;
+    }
+
+    #login_form_close:hover {
+        background-color: #f00;
+    }
+
+    .login_form_row_wrap {
+        position: relative;
+
+        .login_form_row {
+            margin: 20px 0;
+            overflow: hidden;
+
+            .login_form_wrap {
+                position: relative;
+                padding: 0 54px;
+
+                .form_in_wrap {
+                    position: relative;
+
+                    .form_in_tip {
+                        padding-left: 20px;
+                        line-height: 52px;
+                        position: absolute;
+                        font-size: 25px;
+                        color: #9c9c9c;
+                    }
+
+                    .form_in {
+                        /*margin: 0 54px;*/
+                        padding: 0 20px;
+                        width: 350px;
+                        height: 50px;
+                        border: 1px solid #ccc;
+                        color: #fff;
+                        font-size: 25px;
+                        transition: .1s all linear;
+                    }
+
+                    .form_in:hover {
+                        border-color: #fff;
+                    }
+
+                    .form_in:focus {
+                        border-color: #09f;
+                    }
+
+                    #form_login {
+                        width: 390px;
+                        height: 50px;
+                        color: #fff;
+                        font-size: 25px;
+                        border: 0;
+                        cursor: pointer;
+                        transition: .1s all linear;
+                    }
+
+                    #form_login:hover {
+                        background-color: rgba(255, 255, 255, .3);
+                    }
+
+                    #form_login:active {
+                        background-color: rgba(255, 255, 255, .5);
+                    }
+                }
+
+                .form_link_reg {
+                    float: right;
+                    color: #09f;
+                }
+
+                .form_tips_info {
+                    .tip_info {
+                        background: url('../images/error.png') no-repeat;
+                        padding-left: 22px;
+                        line-height: 18px;
+                        height: 18px;
+                        color: #f00;
+                        margin: 7px 0;
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.show {
+    display: block !important;
+}
+
+.hide {
+    display: none !important;
+}

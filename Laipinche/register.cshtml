@@ -20,7 +20,7 @@
         <div class="wrapper" style="background:linear-gradient(#fff, #fff, rgba(0, 0, 0, 0.00))">
             <div class="register">
                 <div class="wrapper">
-                    <div class="title">欢迎注册Car Pool</div>
+                    <div class="title">欢迎注册CarPool</div>
                     <div class="title_min">爱上拼车生活</div>
                     <form action="#" method="post">
                         <div id="form-reg" class="form">
@@ -94,7 +94,7 @@
                             <div class="row">
                                 <div class="telcode-wrap">
                                     <div class="tip" v-bind:class="{hide:!verify_telcode(1)}">短信验证码</div>
-                                    <input type="text" v-on:focus="telcode_focus" v-on:blur="telcode_blur" id="telcode" v-model="telcode" class="in telcode" maxlength="11" autocomplete="off" />
+                                    <input type="text" v-on:focus="telcode_focus" v-on:blur="telcode_blur" id="telcode" v-model="telcode" class="in telcode" maxlength="5" autocomplete="off" />
                                     <div class="tick" v-bind:class="{show:verify_telcode()}"></div>
                                 </div>
                                 <input id="send-telcode" class="btn-send-telcode" v-bind:class="{'btn-send-telcode-waiting':is_send_telcode}" v-on:click="send_telcode" type="button" value="发送短信验证码" />

@@ -22,5 +22,9 @@
   {
     "outputFile": "css/login.css",
     "inputFile": "css/login.less"
+  },
+  {
+    "outputFile": "css/startcarpool.css",
+    "inputFile": "css/startcarpool.less"
   }
 ]

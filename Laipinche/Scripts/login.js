@@ -1,20 +1,16 @@
-﻿var win = $(window)
-var bll_url = 'http://localhost:50843/api/'
-var page_min_width = 720;
-
-function Login_Show() {
+﻿function Login_Show() {
     var _this = $("#login_form");
     set_align_center(win, _this, page_min_width);
-    set_vertical_center(win, _this, page_min_width);
+    set_vertical_center(win, _this);
 
     win.bind("resize", function () {
         set_align_center(win, _this, page_min_width);
-        set_vertical_center(win, _this, page_min_width);
+        set_vertical_center(win, _this);
     });
     _this.show();
 }
 function Login_LoginOut() {
-    $.cookie('ssid', null);
+    $.cookie('LPCSSID', null);
     location.reload(true);
 }
 $(function () {
@@ -65,12 +61,12 @@ $(function () {
                 var btn_login = $("#form_login");
                 btn_login.val("正在登陆．．．");
                 send_data({
-                    url: bll_url + "users/login",
+                    url: api_url + "users/login",
                     data: { username: this.username, password: this.password },
                     callback: (in_data) => {
-                        var data = JSON.parse(in_data);
-                        if (data['code'] == 200) {
-                            $.cookie("ssid", data['data']);
+                        var data = in_data['data'];
+                        if (in_data['code'] == 200) {
+                            $.cookie("LPCSSID", data['LPCSSID']);
                             btn_login.val("登录成功");
                             setTimeout(() => {
                                 this.close_form();
