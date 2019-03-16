@@ -26,5 +26,9 @@
   {
     "outputFile": "css/startcarpool.css",
     "inputFile": "css/startcarpool.less"
+  },
+  {
+    "outputFile": "css/personalcenter.css",
+    "inputFile": "css/personalcenter.less"
   }
 ]

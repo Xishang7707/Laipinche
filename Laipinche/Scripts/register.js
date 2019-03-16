@@ -3,13 +3,13 @@
     document.onselectstart = () => { return false };
     $('img').on('dragstart', function (event) { event.preventDefault(); });
 
-    set_align_center(win, $("div.header .wrapper"), page_min_width);
+    //set_align_center(win, $("div.header .wrapper"), page_min_width);
     init_page();
     set_register_center();
 
     //更改窗口大小
     win.resize(function () {
-        set_align_center(win, $("div.header .wrapper"), page_min_width);
+        //set_align_center(win, $("div.header .wrapper"), page_min_width);
 
         init_page();
         set_register_center();

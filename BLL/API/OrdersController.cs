@@ -92,9 +92,12 @@ namespace Laipinche.BLL.API
 
                 ret_json.Add("or_id", or_json["id"]?.ToString());
                 ret_json.Add("from", or_json["from"]?.ToString());
+                ret_json.Add("way", or_json["way"]?.ToString());
                 ret_json.Add("starttime", or_json["starttime"]?.ToString());
                 ret_json.Add("to", or_json["to"]?.ToString());
                 ret_json.Add("remarks", or_json["remarks"]?.ToString());
+                ret_json.Add("isret", or_json["isret"]?.ToString());
+                ret_json.Add("rettime", or_json["rettime"]?.ToString());
                 ret_json.Add("paytype", or_json["paytype"]?.ToString());
                 ret_json.Add("price", or_json["price"]?.ToString());
                 ret_json.Add("state", or_json["state"]?.ToString());
@@ -140,22 +143,35 @@ namespace Laipinche.BLL.API
                 string count = data["count"]?.ToString();
                 string page = data["page"]?.ToString();
                 string type = data["type"]?.ToString();
-                if (from == null || to == null || time == null || count == null || page == null || type == null)
+                if (from == null || to == null || count == null || page == null || type == null)
                     return SendData(400);
-                JObject search_json = OrderDAL.Search(from, to, time, type, int.Parse(count), int.Parse(page));
+                JObject search_json = OrderDAL.Search(null, from, to, time, type, int.Parse(count), int.Parse(page));
                 JArray list_data = (JArray)search_json["data"];
                 JArray result_jsa = new JArray();
                 foreach (JObject item in list_data)
                 {
+                    int applying = OrderDAL.GetOrderApplyingCount(item["id"].ToString(), "4");
+                    int applyed = OrderDAL.GetOrderApplyingCount(item["id"].ToString(), "0");
+                    JObject car_json = CarDAL.GetInfo(item["us_id"]?.ToString());
+
                     JObject json = new JObject();
                     json.Add("id", item["id"]);
                     json.Add("from", item["from"]?.ToString());
+                    json.Add("way", item["way"]?.ToString());
                     json.Add("to", item["to"]?.ToString());
                     json.Add("starttime", item["starttime"]?.ToString());
                     json.Add("paytype", item["paytype"]?.ToString());
                     json.Add("price", item["price"]?.ToString());
                     json.Add("type", item["type"]?.ToString());
                     json.Add("or_type", item["or_type"]?.ToString());
+                    json.Add("isret", bool.Parse(item["isret"]?.ToString()));
+                    json.Add("rettime", item["rettime"]?.ToString());
+                    json.Add("state", item["state"]?.ToString());
+                    json.Add("time", item["time"]?.ToString());
+                    json.Add("applying", applying);
+                    json.Add("applyed", applyed);
+
+                    json.Add("capacity", car_json["capacity"]);
 
                     result_jsa.Add(json);
                 }
@@ -229,6 +245,281 @@ namespace Laipinche.BLL.API
                         return SendData(200);
                     else return SendData(20000);
                 }
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 上下班拼车列表
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject GetWorkList(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string from = data["from"]?.ToString();
+                string to = data["to"]?.ToString();
+
+                string count = data["count"]?.ToString();
+                string page = data["page"]?.ToString();
+                string type = data["type"]?.ToString();
+                if (count == null || page == null || type == null)
+                    return SendData(400);
+                JObject search_json = OrderDAL.Search(null, from, to, null, type, int.Parse(count), int.Parse(page));
+                JArray list_data = (JArray)search_json["data"];
+                JArray result_jsa = new JArray();
+                foreach (JObject item in list_data)
+                {
+                    int applying = OrderDAL.GetOrderApplyingCount(item["id"].ToString(), "4");
+                    int applyed = OrderDAL.GetOrderApplyingCount(item["id"].ToString(), "0");
+
+                    JObject car_json = CarDAL.GetInfo(item["us_id"]?.ToString());
+
+                    JObject json = new JObject();
+                    json.Add("id", item["id"]);
+                    json.Add("from", item["from"]?.ToString());
+                    json.Add("way", item["way"]?.ToString());
+                    json.Add("to", item["to"]?.ToString());
+                    json.Add("starttime", item["starttime"]?.ToString());
+                    json.Add("paytype", item["paytype"]?.ToString());
+                    json.Add("price", item["price"]?.ToString());
+                    json.Add("type", item["type"]?.ToString());
+                    json.Add("or_type", item["or_type"]?.ToString());
+                    json.Add("isret", bool.Parse(item["isret"]?.ToString()));
+                    json.Add("state", item["state"]?.ToString());
+                    json.Add("time", item["time"]?.ToString());
+                    json.Add("applying", applying);
+                    json.Add("applyed", applyed);
+
+                    json.Add("capacity", car_json["capacity"]);
+
+                    result_jsa.Add(json);
+                }
+
+                JObject ret_json = new JObject();
+                ret_json.Add("curpage", page);
+                ret_json.Add("count", count);
+                ret_json.Add("pagecount", search_json["pagecount"]);
+                ret_json.Add("data", result_jsa);
+
+                return SendData(200, "成功", ret_json);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 获取统计信息
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject GetStatistical(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                //解密us_id
+                JObject ssid_json = ToolsDAL.DecryptPasswordKey(ssid);
+                if (ssid_json == null)
+                    return SendData(400);
+                int carpooling = OrderDAL.GetCarpoolCount(ssid_json["id"].ToString(), data["type"]?.ToString(), "0");
+                int carpoolcount = OrderDAL.GetCarpoolCount(ssid_json["id"].ToString(), data["type"]?.ToString(), "-1");
+                int carpooled = OrderDAL.GetCarpoolCount(ssid_json["id"].ToString(), data["type"]?.ToString(), "2");
+
+                float disburse = OrderDAL.GetDisburse(ssid_json["id"].ToString());
+                float income = OrderDAL.GetIncome(ssid_json["id"].ToString());
+
+                JObject ret_json = new JObject();
+                ret_json.Add("carpooling", carpooling);
+                ret_json.Add("carpoolcount", carpoolcount);
+                ret_json.Add("carpooled", carpooled);
+                ret_json.Add("disburse", disburse);
+                ret_json.Add("income", income);
+
+
+
+                return SendData(200, "成功", ret_json);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 获取用户发布的拼车订单
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject GetCarpools(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                //解密us_id
+                JObject ssid_json = ToolsDAL.DecryptPasswordKey(ssid);
+                if (ssid_json == null)
+                    return SendData(400);
+
+                JArray s_json = (JArray)OrderDAL.Search(ssid_json["id"]?.ToString(), null, null, null, data["type"].ToString(), -1, -1)["data"];
+                JArray or_datas = new JArray();
+                foreach (JObject item in s_json)
+                {
+                    int applying = OrderDAL.GetOrderApplyingCount(item["id"]?.ToString(), "4");
+                    JObject json = new JObject();
+                    json.Add("id", item["id"]);
+                    json.Add("from", item["from"]);
+                    json.Add("to", item["to"]);
+                    json.Add("paytype", item["paytype"]);
+                    json.Add("price", item["price"]);
+                    json.Add("state", item["state"]);
+                    json.Add("applying", applying);
+
+                    or_datas.Add(json);
+                }
+
+                return SendData(200, data: or_datas);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 关闭拼车订单
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject CloseOrder(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                //解密us_id
+                JObject ssid_json = ToolsDAL.DecryptPasswordKey(ssid);
+                if (ssid_json == null)
+                    return SendData(400);
+
+                if (!OrderDAL.CloseOrder(data["id"].ToString(), ssid_json["id"].ToString()))
+                    return SendData(20000);
+                return SendData(200);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 取消申请
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject CloseApplyOrder(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                //解密us_id
+                JObject ssid_json = ToolsDAL.DecryptPasswordKey(ssid);
+                if (ssid_json == null)
+                    return SendData(400);
+
+                if (!OrderDAL.CloseApplyOrder(data["id"].ToString(), ssid_json["id"].ToString()))
+                    return SendData(20000);
+                return SendData(200);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
+        /// <summary>
+        /// 获取正在申请的拼车订单
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JObject GetApplying(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                //解密us_id
+                JObject ssid_json = ToolsDAL.DecryptPasswordKey(ssid);
+                if (ssid_json == null)
+                    return SendData(400);
+
+                JArray jsa_data = OrderDAL.GetApplying(ssid_json["id"].ToString(), data["type"].ToString());
+                JArray ret_jsa = new JArray();
+                foreach (JObject item in jsa_data)
+                {
+                    JObject json = new JObject();
+                    json.Add("id", item["id"]);
+                    json.Add("from", item["from"]);
+                    json.Add("to", item["to"]);
+                    json.Add("price", item["odsprice"]);
+                    json.Add("starttime", item["starttime"].ToString());
+                    json.Add("paytype", item["paytype"]);
+                    json.Add("state", item["state"]);
+                    json.Add("odsid", item["odsid"]);
+
+                    ret_jsa.Add(json);
+                }
+
+                return SendData(200, data: ret_jsa);
             }
             catch (Exception e)
             {

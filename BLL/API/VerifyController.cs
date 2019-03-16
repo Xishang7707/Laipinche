@@ -57,5 +57,30 @@ namespace Laipinche.BLL
                 return SendData(400);
             }
         }
+        /// <summary>
+        /// 验证是否登录
+        /// </summary>
+        /// <param name="in_data"></param>
+        /// <returns></returns>
+        public JObject Verifylog(dynamic in_data)
+        {
+            try
+            {
+                JObject data = JObject.Parse(Tools.RSADecrypt(in_data));
+                //验证请求时间
+                string c_t = data["t"]?.ToString();
+                if (!Vertify_time(c_t, Config.Config.Timeout))
+                    return SendData(403);
+                string ssid = data["LPCSSID"]?.ToString();
+                //是否登录
+                if (!VerifyAuthorization(ssid))
+                    return SendData(10011);
+                return SendData(200);
+            }
+            catch (Exception e)
+            {
+                return SendData(400);
+            }
+        }
     }
 }

@@ -77,7 +77,7 @@ namespace Laipinche.BLL
         //    };
         //    return JsonConvert.SerializeObject(ret_data);
         //}
-        protected JObject SendData(int StatusCode = 200, string Status = "成功", JObject data = null)
+        protected JObject SendData(int StatusCode = 200, string Status = "成功", JToken data = null)
         {
             string status = ReturnCodeState[StatusCode] == null ? Status : ReturnCodeState[StatusCode];
 

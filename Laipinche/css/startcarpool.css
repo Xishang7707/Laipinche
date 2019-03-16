@@ -32,7 +32,7 @@ input {
   min-width: 1200px;
   height: 50px;
   margin: 0 auto;
-  position: absolute;
+  /*position: absolute;*/
 }
 .wrapper {
   width: 100%;
@@ -43,13 +43,20 @@ input {
   min-width: 1200px;
   width: 100%;
   position: relative;
+  padding-top: 7%;
+  overflow: hidden;
 }
 .page .content-wrap {
   width: 1200px;
   overflow: hidden;
-  position: absolute;
+  position: relative;
+  width: 1240px;
+  margin: 0 auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.45);
+}
+.page .content-wrap .mode-menu {
+  overflow: hidden;
 }
 .page .content-wrap .mode-menu li {
   float: left;
@@ -63,6 +70,7 @@ input {
   text-align: center;
   margin: 0 20px;
   color: #fff;
+  cursor: pointer;
 }
 .page .content-wrap .mode-menu li a:hover {
   background-color: rgba(0, 0, 0, 0.5);
@@ -209,6 +217,9 @@ input {
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr .order-operation {
   color: #09f;
 }
+.page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr td:nth-child(7) {
+  cursor: pointer;
+}
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpools-wrap .mode-1-car-pool-list tr:not(:first-child):nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -253,6 +264,7 @@ input {
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-row {
   overflow: hidden;
   margin: 13px 0;
+  text-align: left;
 }
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-title {
   color: #ccc;
@@ -309,6 +321,7 @@ input {
 }
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .car-remarks {
   color: #fff;
+  text-align: left;
 }
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-btn {
   display: inline-block;
@@ -317,6 +330,7 @@ input {
   padding: 7px 13px;
   margin: 13px 0;
   margin-right: 13px;
+  cursor: pointer;
 }
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-btn:hover {
   background: rgba(0, 0, 0, 0.4);
@@ -327,6 +341,7 @@ input {
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.35);
+  text-align: left;
 }
 .page .content-wrap .mode-1 .mode-1-content .mode-1-carpool-details-wrap .mode-1-details-msg-row {
   overflow: hidden;
@@ -376,6 +391,322 @@ input {
 .page .content-wrap .mode-2 {
   margin: 17px 0;
   /*display:none;*/
+}
+.page .content-wrap .mode-2 .check-city {
+  overflow: hidden;
+}
+.page .content-wrap .mode-2 .check-city li {
+  float: left;
+  margin: 0 7px;
+  font-size: 14px;
+  color: #fff;
+}
+.page .content-wrap .mode-2 .check-city li a {
+  color: #09f;
+  font-size: 14px;
+}
+.page .content-wrap .mode-2 .check-city li.cur-city {
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+}
+.page .content-wrap .mode-2 .check-city li .desc {
+  color: #ccc;
+}
+.page .content-wrap .mode-2 .radio-wrap {
+  display: inline-block;
+  overflow: hidden;
+  float: left;
+}
+.page .content-wrap .mode-2 .radio-wrap input[type='radio'] {
+  /*opacity: 0;
+                    width: 18px;
+                    height: 18px;*/
+  display: none;
+}
+.page .content-wrap .mode-2 .radio-wrap label {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #fff;
+  display: block;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: 0.1s all linear;
+}
+.page .content-wrap .mode-2 .radio-wrap input:checked + label {
+  background-color: #0f0;
+}
+.page .content-wrap .mode-2 .in-wrap {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+.page .content-wrap .mode-2 .in-wrap input {
+  border: 1px solid #fff;
+  height: 22px;
+  width: 270px;
+  padding-left: 7px;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.1s all linear;
+}
+.page .content-wrap .mode-2 .in-wrap input::placeholder {
+  color: #ccc;
+}
+.page .content-wrap .mode-2 .in-wrap span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-left: 7px;
+  line-height: 24px;
+  color: #c7c7c7;
+  font-size: 14px;
+  pointer-events: none;
+}
+.page .content-wrap .mode-2 .in-wrap input:focus {
+  border-color: #09f;
+}
+.page .content-wrap .mode-2 .search {
+  float: left;
+  width: 550px;
+}
+.page .content-wrap .mode-2 .search .row {
+  overflow: hidden;
+  margin: 13px 7px;
+}
+.page .content-wrap .mode-2 .search .row li {
+  float: left;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  color: #fff;
+}
+.page .content-wrap .mode-2 .search .row li:last-child {
+  float: right;
+}
+.page .content-wrap .mode-2 .search .row li:last-child span {
+  color: #fff;
+  font-size: 14px;
+}
+.page .content-wrap .mode-2 .search .btn-search-wrap {
+  margin: 17px 0;
+}
+.page .content-wrap .mode-2 .search .btn-search-wrap .btn-search {
+  display: inline-block;
+  color: #fff;
+  padding: 7px 50px;
+  font-size: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.page .content-wrap .mode-2 .search .btn-search-wrap .btn-search:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.page .content-wrap .mode-2 .search .btn-search-wrap .btn-search:active {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-2 .search .btn-search-wrap .tip {
+  color: #fff;
+  font-size: 13px;
+  margin-left: 25px;
+}
+.page .content-wrap .mode-2 #mode-2-map {
+  float: right;
+  width: 650px;
+  height: 350px;
+  background: #ccc;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr:first-child {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr th {
+  padding: 7px 0;
+  color: #fff;
+  font-size: 14px;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td {
+  color: #fff;
+  text-align: center;
+  padding: 7px 0;
+  font-size: 14px;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td:nth-child(2) {
+  text-align: left;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td:nth-child(2) a {
+  color: #09f;
+  cursor: pointer;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td:nth-child(2) span.way {
+  font-size: 13px;
+  color: #fff;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td:nth-child(2) span.isret {
+  color: #fff;
+  background-color: #ffaa00;
+  font-size: 3px;
+  padding: 1px 3px;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td.invalid {
+  color: #0f0;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr td.uninvalid {
+  color: #f00;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr .paytype-free {
+  color: #f00;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr .paytype-negotiable {
+  color: #0f0;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr .paytype-price {
+  color: #fff;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr .order-operation {
+  color: #09f;
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr:not(:first-child):nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr:not(:first-child):nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.page .content-wrap .mode-2 .mode-2-car-pool-list tr:not(:first-child):hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap {
+  float: right;
+  display: none;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-row {
+  overflow: hidden;
+  margin: 13px 0;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-title {
+  color: #ccc;
+  font-size: 14px;
+  float: left;
+  height: 21px;
+  line-height: 21px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msgstate-ok {
+  color: #0f0;
+  float: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-report {
+  padding-left: 20px;
+  background: url('../images/icon.gif') no-repeat 0 -492px;
+  color: #09f;
+  float: right;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-deails-icon-to {
+  width: 200px;
+  height: 21px;
+  background: url('../images/x.png') no-repeat -1460px -790px;
+  float: left;
+  margin: 0 35px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-city {
+  float: left;
+  color: #fff;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-mag {
+  float: left;
+  color: #fff;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-starttime {
+  padding-left: 20px;
+  height: 21px;
+  line-height: 21px;
+  color: #fff;
+  background: url('../images/clock2.png') no-repeat;
+  background-size: 16px;
+  /*background: url(../images/icon.gif) no-repeat 0 -527px;*/
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-col {
+  margin: 7px 0;
+  width: 226px;
+  overflow: hidden;
+  float: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .car-remarks-til {
+  background: url('../images/ico_type_car.gif') no-repeat;
+  padding-left: 40px;
+  color: #ccc;
+  font-size: 14px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .car-remarks {
+  color: #fff;
+  text-align: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-btn {
+  display: inline-block;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 7px 13px;
+  margin: 13px 0;
+  margin-right: 13px;
+  cursor: pointer;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-btn:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-btn:active {
+  background: rgba(0, 0, 0, 0.5);
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-row {
+  overflow: hidden;
+  margin: 13px 0;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-col {
+  float: left;
+  width: 300px;
+  text-align: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-title {
+  color: #fff;
+  float: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-content {
+  color: #fff;
+  display: block;
+  height: 21px;
+  line-height: 21px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-legalize-tel {
+  width: 21px;
+  height: 21px;
+  background: url(../images/icon2.png) no-repeat -27px 0px;
+  background-size: 130px;
+  float: left;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-integrity-ok {
+  background: url('../images/icon.gif') no-repeat 0 -431px;
+  color: #0f0;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-integrity-non {
+  background: url('../images/icon.gif') no-repeat 0 -400px;
+  color: #ff0;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-integrity-bad {
+  background: url('../images/icon.gif') no-repeat 0 -367px;
+  color: #f00;
+  padding-left: 20px;
+}
+.page .content-wrap .mode-2 .mode-2-carpool-details-wrap .mode-2-details-msg-id {
+  height: 21px;
+  line-height: 21px;
+  color: #fff;
 }
 #mode-1-carpools {
   display: block;

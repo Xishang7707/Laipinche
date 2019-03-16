@@ -76,6 +76,19 @@ function is_login(poplogin = false) {
             Login_Show();
         return false;
     }
+    //} else {
+    //    location.href = 'http://localhost:50822';
+    //    return false;
+    //}
+
+    //send_data({
+    //    url: api_url + 'verify/verifylog',
+    //    callback: (in_data) => {
+    //        if (in_data != 200) {
+    //            $.cookie("LPCSSID", null);
+    //        }
+    //    }
+    //})
 
     return true;
 }

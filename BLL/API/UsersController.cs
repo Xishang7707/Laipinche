@@ -151,6 +151,8 @@ namespace Laipinche.BLL
                 ret_data.Add("username", us_json["username"]);
                 ret_data.Add("name", us_json["name"]);
                 ret_data.Add("type", us_json["type"]);
+                ret_data.Add("tel", us_json["tel"].ToString().Substring(0, 3) + "****" + us_json["tel"].ToString().Substring(7));
+                ret_data.Add("idcard", us_json["idcard"].ToString().Substring(0, 2) + "************" + us_json["idcard"].ToString().Substring(14));
 
                 return SendData(StatusCode: 200, data: ret_data);
             }

@@ -11,6 +11,10 @@
         /// </summary>
         public string Us_id { get; set; }
         /// <summary>
+        /// 司机Id
+        /// </summary>
+        public string Dv_id { get; set; }
+        /// <summary>
         /// 起点
         /// </summary>
         public string From { get; set; }
@@ -70,6 +74,7 @@
         /// 2.完成
         /// 3.关闭
         /// 4.申请中
+        /// 5.被关闭
         /// </summary>
         public string State { get; set; }
         /// <summary>

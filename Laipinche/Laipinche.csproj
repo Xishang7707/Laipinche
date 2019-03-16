@@ -118,6 +118,12 @@
     <Content Include="css\login.min.css">
       <DependentUpon>login.css</DependentUpon>
     </Content>
+    <Content Include="css\personalcenter.css">
+      <DependentUpon>personalcenter.less</DependentUpon>
+    </Content>
+    <Content Include="css\personalcenter.min.css">
+      <DependentUpon>personalcenter.css</DependentUpon>
+    </Content>
     <Content Include="css\register.css">
       <DependentUpon>register.less</DependentUpon>
     </Content>
@@ -149,6 +155,7 @@
     <Content Include="images\pic5.jpg" />
     <Content Include="images\pic6.jpg" />
     <Content Include="images\pic7.jpg" />
+    <Content Include="images\pic8.jpg" />
     <Content Include="images\right.png" />
     <Content Include="images\schedule.png" />
     <Content Include="images\search.png" />
@@ -161,6 +168,7 @@
     <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
     <Content Include="Scripts\jsencrapy.js" />
     <Content Include="Scripts\login.js" />
+    <Content Include="Scripts\personalcenter.js" />
     <Content Include="Scripts\startcarpool.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\vue.js" />
@@ -184,9 +192,11 @@
     <Content Include="css\register.less" />
     <Content Include="css\login.less" />
     <Content Include="css\startcarpool.less" />
+    <Content Include="css\personalcenter.less" />
     <None Include="packages.config" />
     <Content Include="register.cshtml" />
     <Content Include="startcarpool.cshtml" />
+    <Content Include="personalcenter.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

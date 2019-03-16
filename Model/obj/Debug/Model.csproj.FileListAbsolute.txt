@@ -5,4 +5,3 @@ E:\Visual Studio 2017 Projects\Laipinche\Model\bin\Debug\Laipinche.Model.dll
 E:\Visual Studio 2017 Projects\Laipinche\Model\bin\Debug\Laipinche.Model.pdb
 E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Laipinche.Model.dll
 E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Laipinche.Model.pdb
-E:\Visual Studio 2017 Projects\Laipinche\Model\obj\Debug\Model.csprojAssemblyReference.cache

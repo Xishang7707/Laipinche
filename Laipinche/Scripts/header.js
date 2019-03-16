@@ -1,13 +1,14 @@
 ﻿var dataset = {};
-function authorization() {
-    $(".us").hide();
-    $(".us-infoh").show();
-}
-function unauthorization() {
-    $(".us").show();
-    $(".us-infoh").hide();
-}
+
 $(function () {
+    function authorization() {
+        $(".us").hide();
+        $(".us-infoh").show();
+    }
+    function unauthorization() {
+        $(".us").show();
+        $(".us-infoh").hide();
+    }
     if (is_login()) {
         authorization_data({
             url: api_url + 'users/getinfo',
