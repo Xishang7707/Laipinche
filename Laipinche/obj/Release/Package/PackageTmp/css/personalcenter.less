@@ -1,0 +1,169 @@
+﻿@import "global";
+
+.header {
+    width: 100%;
+    min-width: @page_min_width;
+    height: @header_height;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    overflow: hidden;
+    z-index: 100;
+
+    .wrapper {
+        overflow: hidden;
+        width: 70%;
+        min-width: @page_min_width;
+        height: @header_height;
+        margin: 0 auto;
+        /*position: absolute;*/
+    }
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.page {
+    min-width: @page_min_width;
+    width: 100%;
+    position: relative;
+    padding-top: 7%;
+    overflow: hidden;
+
+    .personcenter {
+        position: relative;
+        width: 1200px;
+        margin: 0 auto;
+        overflow: hidden;
+        min-height: 700px;
+        //菜单
+        .menu {
+            width: 200px;
+            background: rgba(0, 0, 0, .3);
+            float: left;
+
+            li {
+                display: inline-block;
+                width: 170px;
+                height: 35px;
+                line-height: 35px;
+                padding-left: 30px;
+                color: #fff;
+                font-size: 15px;
+            }
+
+            li.til {
+                font-weight: bold;
+                font-size: 16px;
+                background-color: rgba(0, 0, 0, .7);
+            }
+
+            li:not([class='til']) {
+                cursor: pointer;
+            }
+
+            li:not([class='til']):hover {
+                background-color: rgba(0, 0, 0, .4)
+            }
+
+            li.cur {
+                background: #09f !important;
+            }
+        }
+        //右侧内容
+        .content-wrap {
+            width: 1000px;
+            background: rgba(0, 0, 0, .3);
+            float: right;
+
+            div {
+                display: none;
+            }
+            //用户中心
+            .us-center {
+                .info-list {
+                    li {
+                        float: left;
+                        padding: 17px;
+                        width: 466px;
+                    }
+
+                    li * {
+                        color: #fff;
+                    }
+
+                    li :first-child {
+                        font-size: 20px;
+                    }
+
+                    li.til {
+                        width: 966px;
+                        float: none;
+                        clear: both;
+                        color: #fff;
+                        background: rgba(0, 0, 0, .7);
+                    }
+                }
+            }
+            //发布的长途拼车
+            .longcarpooling {
+            }
+            //数据列表
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+
+                tr:first-child {
+                    background-color: rgba(0, 0, 0, .7);
+                }
+
+                tr {
+                    th {
+                        padding: 7px 0;
+                        color: #fff;
+                    }
+
+                    td {
+                        color: #fff;
+                        text-align: center;
+                        padding: 7px 0;
+                    }
+
+                    .paytype-free {
+                        color: #f00;
+                    }
+
+                    .paytype-negotiable {
+                        color: #0f0;
+                    }
+
+                    .paytype-price {
+                        color: #fff;
+                    }
+
+                    .order-operation {
+                        color: #09f;
+                    }
+
+                    td:nth-child(7) {
+                        cursor: pointer;
+                    }
+                }
+
+                tr:not(:first-child):nth-child(odd) {
+                    background-color: rgba(0, 0, 0, .4);
+                }
+
+                tr:not(:first-child):nth-child(even) {
+                    background-color: rgba(0, 0, 0, .3);
+                }
+
+                tr:not(:first-child):hover {
+                    background-color: rgba(0,0,0,.5);
+                }
+            }
+        }
+    }
+}

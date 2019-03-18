@@ -69,12 +69,27 @@ function send_data({ url, data, callback }) {
  * @param {any} popup
  */
 function is_login(poplogin = false) {
-    var ssid = $.cookie("ssid");
-    if (ssid == null) {
+    var ssid = $.cookie("LPCSSID");
+
+    if (ssid == null || ssid == "null") {
         if (poplogin == true)
             Login_Show();
         return false;
     }
+    //} else {
+    //    location.href = 'http://localhost:50822';
+    //    return false;
+    //}
+
+    //send_data({
+    //    url: api_url + 'verify/verifylog',
+    //    callback: (in_data) => {
+    //        if (in_data != 200) {
+    //            $.cookie("LPCSSID", null);
+    //        }
+    //    }
+    //})
+
     return true;
 }
 /**
@@ -86,11 +101,12 @@ function authorization_data({ url, data, pop = false, callback }) {
         return;
     var to_data = {};
     if (data == null)
-        to_data = { ssid: $.cookie('ssid') };
+        to_data = { 'LPCSSID': $.cookie('LPCSSID') };
     else {
         to_data = data;
-        to_data['ssid'] = $.cookie('ssid');
+        to_data['LPCSSID'] = $.cookie('LPCSSID');
     }
+
     send_data({
         url: url,
         data: to_data,

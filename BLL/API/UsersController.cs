@@ -85,7 +85,7 @@ namespace Laipinche.BLL
             }
             catch (Exception e)
             {
-                return SendData(400);
+                return SendData(400, data: e.ToString());
             }
         }
 

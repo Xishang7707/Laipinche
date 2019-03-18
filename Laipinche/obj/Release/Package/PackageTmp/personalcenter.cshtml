@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>用户中心</title>
+    <link href="~/css/personalcenter.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/global.js"></script>
+    <script src="~/Scripts/personalcenter.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="wrapper">
+            @RenderPage("~/header.cshtml", new { head_font_color = "#fff" })
+        </div>
+    </div>
+    <div class="page">
+        <div style="position:absolute; top:0;">
+            <img style="float:left; width:100%;" src="~/images/pic8.jpg" />
+            <div style="background:linear-gradient(rgba(0, 0, 0, 0.00),  rgba(255, 255, 255, .9), #fff); position:absolute; width:100%; height:100%;"></div>
+        </div>
+        <div class="personcenter" id="personcenter">
+            <ul class="menu">
+                <li class="til">信息管理</li>
+                <li v-on:click="menu_personcenter">用户中心</li>
+                @*<li>账号设置</li>*@
+                <li class="til">长途拼车</li>
+                <li v-on:click="menu_longcarpooling">发布的长途拼车</li>
+                <li v-on:click="menu_longcarpool_apply">申请加入的长途拼车</li>
+                @*<li>设置拼车关注</li>*@
+                <li class="til">上下班拼车</li>
+                <li v-on:click="menu_workcarpooling">发布的上下班拼车</li>
+                <li v-on:click="menu_workcarpool_apply">申请加入的上下班拼车</li>
+            </ul>
+            <div class="content-wrap">
+                <div class="us-center">
+                    <ul class="info-list">
+                        <li class="til">基本信息</li>
+                        <li>
+                            <span>用户名：</span>
+                            <span>{{us_info['username']}}</span>
+                        </li>
+                        <li>
+                            <span>用户类型：</span>
+                            <span v-if="us_info['type']==0">乘客</span>
+                            <span v-else-if="us_info['type']==1">司机</span>
+                        </li>
+                        <li>
+                            <span>姓名：</span>
+                            <span>{{us_info['name']}}</span>
+                        </li>
+                        <li>
+                            <span>手机号码：</span>
+                            <span>{{us_info['tel']}}</span>
+                        </li>
+                        <li>
+                            <span>身份证：</span>
+                            <span>{{us_info['idcard']}}</span>
+                        </li>
+                        <li class="til">拼车信息</li>
+                        <li>
+                            <span>进行中的拼车数量：</span>
+                            <span>{{statistical['carpooling']}}</span>
+                        </li>
+                        <li>
+                            <span>发布的拼车数量：</span>
+                            <span>{{statistical['carpoolcount']}}</span>
+                        </li>
+                        <li>
+                            <span>已完成的拼车数量：</span>
+                            <span>{{statistical['carpooled']}}</span>
+                        </li>
+                        <li class="til">财务</li>
+                        <li>
+                            <span>总收入：</span>
+                            <span>{{statistical['income']}}</span>
+                        </li>
+                        <li>
+                            <span>总支出：</span>
+                            <span>{{statistical['disburse']}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="longcarpooling">
+                    <table class="table">
+                        <tr>
+                            <th>编号</th>
+                            <th>起点</th>
+                            <th>终点</th>
+                            <th>价格</th>
+                            <th>状态</th>
+                            <th>申请人数</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="item in carpools">
+                            <td>{{item['id']}}</td>
+                            <td>{{item['from']}}</td>
+                            <td>{{item['to']}}</td>
+                            <td v-if="item['paytype']==0">免费</td>
+                            <td v-else-if="item['paytype']==1">面议</td>
+                            <td v-else-if="item['paytype']==2">¥{{item['price']}}元/位</td>
+                            <td>{{orderstate[item['state']]}}</td>
+                            <td>{{item['applying']}}</td>
+                            <td v-on:click="closeorder(item['id'], 0)">关闭</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="longcarpool-apply">
+                    <table class="table">
+                        <tr>
+                            <th>编号</th>
+                            <th>起点</th>
+                            <th>终点</th>
+                            <th>价格</th>
+                            <th>状态</th>
+                            <th>出发时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="item in carpools">
+                            <td>{{item['id']}}</td>
+                            <td>{{item['from']}}</td>
+                            <td>{{item['to']}}</td>
+                            <td v-if="item['paytype']==0">免费</td>
+                            <td v-else-if="item['paytype']==1">面议</td>
+                            <td v-else-if="item['paytype']==2">¥{{item['price']}}元</td>
+                            <td>{{orderstate[item['state']]}}</td>
+                            <td>{{item['starttime']}}</td>
+                            <td v-on:click="closeapply(item['id'], 0)">关闭</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="workcarpooling">
+                    <table class="table">
+                        <tr>
+                            <th>编号</th>
+                            <th>起点</th>
+                            <th>终点</th>
+                            <th>价格</th>
+                            <th>状态</th>
+                            <th>申请人数</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="item in carpools">
+                            <td>{{item['id']}}</td>
+                            <td>{{item['from']}}</td>
+                            <td>{{item['to']}}</td>
+                            <td v-if="item['paytype']==0">免费</td>
+                            <td v-else-if="item['paytype']==1">面议</td>
+                            <td v-else-if="item['paytype']==2">¥{{item['price']}}元/位</td>
+                            <td>{{orderstate[item['state']]}}</td>
+                            <td>{{item['applying']}}</td>
+                            <td v-on:click="closeorder(item['id'], 1)">关闭</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="workcarpool-apply">
+                    <table class="table">
+                        <tr>
+                            <th>编号</th>
+                            <th>起点</th>
+                            <th>终点</th>
+                            <th>价格</th>
+                            <th>状态</th>
+                            <th>出发时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="item in carpools">
+                            <td>{{item['id']}}</td>
+                            <td>{{item['from']}}</td>
+                            <td>{{item['to']}}</td>
+                            <td v-if="item['paytype']==0">免费</td>
+                            <td v-else-if="item['paytype']==1">面议</td>
+                            <td v-else-if="item['paytype']==2">¥{{item['price']}}元</td>
+                            <td>{{orderstate[item['state']]}}</td>
+                            <td>{{item['starttime']}}</td>
+                            <td v-on:click="closeapply(item['id'], 1)">关闭</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        @RenderPage("~/footer.cshtml")
+    </div>
+</body>
+</html>

@@ -6,14 +6,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>E:\Laipinche</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\DYLX\Desktop\Laipinche</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Laipinche.dll">
-      <publishTime>03/12/2019 11:41:43</publishTime>
+      <publishTime>03/16/2019 23:37:05</publishTime>
     </File>
     <File Include="bin/Laipinche.pdb">
-      <publishTime>03/12/2019 11:41:43</publishTime>
+      <publishTime>03/16/2019 23:37:05</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>03/03/2019 17:14:18</publishTime>
@@ -196,13 +196,13 @@
       <publishTime>03/03/2019 17:14:17</publishTime>
     </File>
     <File Include="css/footer.css">
-      <publishTime>03/11/2019 14:47:18</publishTime>
+      <publishTime>03/15/2019 20:27:26</publishTime>
     </File>
     <File Include="css/footer.less">
-      <publishTime>03/03/2019 17:14:17</publishTime>
+      <publishTime>03/15/2019 20:27:26</publishTime>
     </File>
     <File Include="css/footer.min.css">
-      <publishTime>03/11/2019 14:46:55</publishTime>
+      <publishTime>03/15/2019 20:27:26</publishTime>
     </File>
     <File Include="css/global.css">
       <publishTime>03/11/2019 14:47:18</publishTime>
@@ -223,13 +223,13 @@
       <publishTime>03/11/2019 14:46:55</publishTime>
     </File>
     <File Include="css/index.css">
-      <publishTime>03/11/2019 14:47:19</publishTime>
+      <publishTime>03/15/2019 19:54:54</publishTime>
     </File>
     <File Include="css/index.less">
-      <publishTime>03/11/2019 19:34:07</publishTime>
+      <publishTime>03/15/2019 19:54:54</publishTime>
     </File>
     <File Include="css/index.min.css">
-      <publishTime>03/11/2019 14:46:56</publishTime>
+      <publishTime>03/15/2019 19:54:54</publishTime>
     </File>
     <File Include="css/login.css">
       <publishTime>03/11/2019 14:47:20</publishTime>
@@ -240,35 +240,56 @@
     <File Include="css/login.min.css">
       <publishTime>03/11/2019 14:46:56</publishTime>
     </File>
+    <File Include="css/personalcenter.css">
+      <publishTime>03/16/2019 22:05:45</publishTime>
+    </File>
+    <File Include="css/personalcenter.less">
+      <publishTime>03/16/2019 22:05:46</publishTime>
+    </File>
+    <File Include="css/personalcenter.min.css">
+      <publishTime>03/16/2019 22:05:45</publishTime>
+    </File>
     <File Include="css/register.css">
-      <publishTime>03/11/2019 14:47:17</publishTime>
+      <publishTime>03/15/2019 19:55:02</publishTime>
     </File>
     <File Include="css/register.less">
-      <publishTime>03/11/2019 14:02:38</publishTime>
+      <publishTime>03/15/2019 19:55:01</publishTime>
     </File>
     <File Include="css/register.min.css">
-      <publishTime>03/11/2019 14:46:58</publishTime>
+      <publishTime>03/15/2019 19:55:02</publishTime>
     </File>
     <File Include="css/startcarpool.css">
-      <publishTime>03/11/2019 20:55:28</publishTime>
+      <publishTime>03/16/2019 01:57:22</publishTime>
     </File>
     <File Include="css/startcarpool.less">
-      <publishTime>03/11/2019 20:54:58</publishTime>
+      <publishTime>03/16/2019 01:57:22</publishTime>
     </File>
     <File Include="css/startcarpool.min.css">
-      <publishTime>03/11/2019 20:55:29</publishTime>
+      <publishTime>03/16/2019 01:57:22</publishTime>
     </File>
     <File Include="footer.cshtml">
-      <publishTime>03/03/2019 17:14:17</publishTime>
+      <publishTime>03/13/2019 16:17:43</publishTime>
     </File>
     <File Include="header.cshtml">
-      <publishTime>03/11/2019 20:56:01</publishTime>
+      <publishTime>03/16/2019 22:56:39</publishTime>
+    </File>
+    <File Include="images/clock.png">
+      <publishTime>03/13/2019 09:36:12</publishTime>
+    </File>
+    <File Include="images/clock2.png">
+      <publishTime>03/13/2019 09:37:16</publishTime>
     </File>
     <File Include="images/close.png">
       <publishTime>03/10/2019 13:43:01</publishTime>
     </File>
     <File Include="images/error.png">
       <publishTime>03/03/2019 17:14:17</publishTime>
+    </File>
+    <File Include="images/icon.gif">
+      <publishTime>03/13/2019 08:53:48</publishTime>
+    </File>
+    <File Include="images/icon2.png">
+      <publishTime>03/13/2019 10:40:23</publishTime>
     </File>
     <File Include="images/ico_type_car.gif">
       <publishTime>03/11/2019 17:26:51</publishTime>
@@ -309,6 +330,9 @@
     <File Include="images/pic7.jpg">
       <publishTime>03/11/2019 11:39:52</publishTime>
     </File>
+    <File Include="images/pic8.jpg">
+      <publishTime>03/15/2019 23:06:08</publishTime>
+    </File>
     <File Include="images/right.png">
       <publishTime>03/11/2019 19:34:01</publishTime>
     </File>
@@ -316,22 +340,28 @@
       <publishTime>03/11/2019 19:27:49</publishTime>
     </File>
     <File Include="images/search.png">
-      <publishTime>03/11/2019 14:57:44</publishTime>
+      <publishTime>03/12/2019 22:51:48</publishTime>
     </File>
     <File Include="images/tick.png">
       <publishTime>03/03/2019 17:14:17</publishTime>
     </File>
+    <File Include="images/x.png">
+      <publishTime>03/13/2019 09:19:57</publishTime>
+    </File>
     <File Include="index.cshtml">
-      <publishTime>03/10/2019 20:04:34</publishTime>
+      <publishTime>03/15/2019 19:39:49</publishTime>
+    </File>
+    <File Include="personalcenter.cshtml">
+      <publishTime>03/16/2019 22:55:30</publishTime>
     </File>
     <File Include="register.cshtml">
-      <publishTime>03/11/2019 14:00:51</publishTime>
+      <publishTime>03/15/2019 20:28:21</publishTime>
     </File>
     <File Include="Scripts/global.js">
-      <publishTime>03/11/2019 13:02:14</publishTime>
+      <publishTime>03/16/2019 23:04:10</publishTime>
     </File>
     <File Include="Scripts/header.js">
-      <publishTime>03/11/2019 11:54:45</publishTime>
+      <publishTime>03/16/2019 10:59:34</publishTime>
     </File>
     <File Include="Scripts/index.js">
       <publishTime>03/11/2019 12:58:14</publishTime>
@@ -346,19 +376,22 @@
       <publishTime>03/10/2019 00:35:49</publishTime>
     </File>
     <File Include="Scripts/login.js">
-      <publishTime>03/11/2019 18:09:45</publishTime>
+      <publishTime>03/14/2019 16:43:07</publishTime>
+    </File>
+    <File Include="Scripts/personalcenter.js">
+      <publishTime>03/16/2019 22:59:57</publishTime>
     </File>
     <File Include="Scripts/register.js">
-      <publishTime>03/11/2019 13:00:56</publishTime>
+      <publishTime>03/15/2019 19:55:38</publishTime>
     </File>
     <File Include="Scripts/startcarpool.js">
-      <publishTime>03/12/2019 08:50:24</publishTime>
+      <publishTime>03/16/2019 23:08:33</publishTime>
     </File>
     <File Include="Scripts/vue.js">
       <publishTime>03/03/2019 17:14:17</publishTime>
     </File>
     <File Include="startcarpool.cshtml">
-      <publishTime>03/12/2019 08:50:40</publishTime>
+      <publishTime>03/15/2019 19:40:21</publishTime>
     </File>
     <File Include="Web.config">
       <publishTime>03/12/2019 11:41:43</publishTime>

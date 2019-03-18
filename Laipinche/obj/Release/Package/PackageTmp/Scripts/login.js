@@ -10,7 +10,7 @@
     _this.show();
 }
 function Login_LoginOut() {
-    $.cookie('ssid', null);
+    $.cookie('LPCSSID', null);
     location.reload(true);
 }
 $(function () {
@@ -64,9 +64,9 @@ $(function () {
                     url: api_url + "users/login",
                     data: { username: this.username, password: this.password },
                     callback: (in_data) => {
-                        var data = JSON.parse(in_data);
-                        if (data['code'] == 200) {
-                            $.cookie("ssid", data['data']);
+                        var data = in_data['data'];
+                        if (in_data['code'] == 200) {
+                            $.cookie("LPCSSID", data['LPCSSID']);
                             btn_login.val("登录成功");
                             setTimeout(() => {
                                 this.close_form();

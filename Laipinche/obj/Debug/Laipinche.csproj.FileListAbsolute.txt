@@ -72,3 +72,4 @@ E:\Visual Studio 2017 Projects\Laipinche\Laipinche\bin\roslyn\vbc.exe
 E:\Visual Studio 2017 Projects\Laipinche\Laipinche\bin\roslyn\vbc.exe.config
 E:\Visual Studio 2017 Projects\Laipinche\Laipinche\bin\roslyn\vbc.rsp
 E:\Visual Studio 2017 Projects\Laipinche\Laipinche\bin\roslyn\VBCSCompiler.exe.config
+E:\Visual Studio 2017 Projects\Laipinche\Laipinche\obj\Debug\Laipinche.csprojAssemblyReference.cache

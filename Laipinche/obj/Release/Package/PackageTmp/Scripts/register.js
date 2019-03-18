@@ -3,13 +3,13 @@
     document.onselectstart = () => { return false };
     $('img').on('dragstart', function (event) { event.preventDefault(); });
 
-    set_align_center(win, $("div.header .wrapper"), page_min_width);
+    //set_align_center(win, $("div.header .wrapper"), page_min_width);
     init_page();
     set_register_center();
 
     //更改窗口大小
     win.resize(function () {
-        set_align_center(win, $("div.header .wrapper"), page_min_width);
+        //set_align_center(win, $("div.header .wrapper"), page_min_width);
 
         init_page();
         set_register_center();
@@ -205,9 +205,9 @@ var form_model = {
                                 url: api_url + "verify/exists",
                                 data: { username: this.username, type: 0 },
                                 callback: (in_data) => {
-                                    var data = JSON.parse(in_data);
+                                    //var data = in_data['data'];
 
-                                    if (data != null && data['code'] == 1)
+                                    if (in_data != null && in_data['code'] == 1)
                                         this.exist_username = true;
                                     else this.exist_username = false;
                                 }
@@ -282,8 +282,8 @@ var form_model = {
                             url: api_url + "verify/exists",
                             data: { idcard: this.idcard, type: 1 },
                             callback: (in_data) => {
-                                data = JSON.parse(in_data);
-                                if (data['code'] == 1) {
+                                //data = JSON.parse(in_data);
+                                if (in_data['code'] == 1) {
                                     this.exist_idcard = true;
                                 } else {
                                     this.exist_idcard = false;
@@ -311,8 +311,8 @@ var form_model = {
                             url: api_url + "verify/exists",
                             data: { tel: this.tel, type: 2 },
                             callback: (in_data) => {
-                                data = JSON.parse(in_data);
-                                if (data['code'] == 1) {
+                                //data = JSON.parse(in_data);
+                                if (in_data['code'] == 1) {
                                     this.exist_tel = true;
                                 } else {
                                     this.exist_tel = false;
@@ -358,11 +358,11 @@ var form_model = {
                     url: api_url + "communicate/sendtelcode",
                     data: { tel: this.tel },
                     callback: function (in_data) {
-                        var data = JSON.parse(in_data);
-                        if (data['code'] == 200) {
+                        //var data = JSON.parse(in_data);
+                        if (in_data['code'] == 200) {
                             _this.val("发送成功");
 
-                        } else alert(data["status"])
+                        } else alert(in_data["status"])
                     }
                 });
 
@@ -433,17 +433,17 @@ var form_model = {
                 data: { username: this.username, password: this.password, name: this.name, idcard: this.idcard, tel: this.tel, telcode: this.telcode },
                 type: "POST",
                 callback: (in_data) => {
-                    var data = JSON.parse(in_data);
-                    if (data['code'] == 200) {
+                    //var data = in_data['data'];
+                    if (in_data['code'] == 200) {
                         btn_register.val("注册成功");
                         setTimeout(function () {
                             location.reload();
                         }, 2000);
                     }
                     else {
-                        if (data['code'] == 10004)
+                        if (in_data['code'] == 10004)
                             this.is_true_telcode = 1;
-                        else if (data['code'] == 10005)
+                        else if (in_data['code'] == 10005)
                             this.is_true_telcode = 2;
                         else btn_register.val("注册失败,请检查信息");
                         this.is_submit = false;

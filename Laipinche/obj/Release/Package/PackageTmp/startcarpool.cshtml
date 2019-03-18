@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>热门拼车</title>
+    <title>开始拼车</title>
     <link href="~/css/startcarpool.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=creGl1m1QdF4GxrBoNLNYvlbEIZCIcLi"></script>
@@ -14,16 +14,20 @@
             @RenderPage("~/header.cshtml", new { head_font_color = "#fff" })
         </div>
     </div>
-    <div class="page" style="background-image: url('images/pic7.jpg'); background-size:100% 100%;">
-        <div class="wrapper" style="background:linear-gradient(rgba(0, 0, 0, 0.00), #fff)">
-            <div class="content-wrap">
+    <div class="page" @*style="background: url('images/pic7.jpg') no-repeat; background-size:100% 100%;"*@>
+        @*style="background-image: url('images/pic7.jpg'); background-size:100% 100%;"*@
+        <div style="position:absolute; top:0;">
+            <img style="float:left; width:100%;" src="~/images/pic7.jpg" />
+            <div style="background:linear-gradient(rgba(0, 0, 0, 0.00), #fff); position:absolute; width:100%; height:100%;"></div>
+        </div>
+        <div class="wrapper" style="background:linear-gradient(rgba(0, 0, 0, 0.00), #fff); text-align:center;">
+            <div class="content-wrap" id="mode-1">
                 <ul class="mode-menu">
-                    <li><a href="#">长途拼车</a></li>
-                    <li><a href="#">上下班拼车</a></li>
-                    <li><a href="#">拼车关注</a></li>
+                    <li><a class="cur" v-on:click="longtrip">长途拼车</a></li>
+                    <li><a v-on:click="workingcarpool">上下班拼车</a></li>
                 </ul>
                 <span class="mode-adv">智能并精确计算出拼车路程、油费和高速路桥费</span>
-                <div class="mode mode-1" id="mode-1">
+                <div class="mode mode-1">
                     <ul class="mode-search">
                         <li class="in-til"><span>出发城市：</span></li>
                         <li class="in-place"><input type="text" id="mode1-start-city" /></li>
@@ -34,12 +38,12 @@
                             <input type="date" id="mode1-date" />
                         </li>
                         <li>
-                            <img class="btn-search" id="mode1-btn-search" src="~/images/search.png" />
+                            <img class="btn-search" id="mode1-btn-search" v-on:click="longtripsearch" src="~/images/search.png" />
                         </li>
                     </ul>
                     <div class="mode-1-content">
                         <div id="mode-1-map"></div>
-                        <div class="mode-1-carpools-wrap">
+                        <div class="mode-1-carpools-wrap" id="mode-1-carpools">
                             <ul class="mode-1-list-head-desc">
                                 <li class="mode-1-til">最新拼车信息</li>
                                 <li class="mode-1-desc">
@@ -59,24 +63,369 @@
                                     <th>操作</th>
                                 </tr>
                                 <tr v-for="item in carpool_list">
-                                    <td>{{item.type}}</td>
-                                    <td>{{item.starttime}}</td>
-                                    <td>{{item.price}}</td>
-                                    <td>{{item.cartype}}</td>
-                                    <td>{{item.startcity}}</td>
-                                    <td>{{item.endcity}}</td>
-                                    <td>{{item.option}}</td>
+                                    <td>
+                                        <img v-if="item.or_type==1" src="~/images/ico_type_car.gif" />
+                                        <img v-else src="~/images/ico_type_man.gif" />
+                                    </td>
+                                    <td>{{parse_pagelist_date(item.starttime)}}</td>
+                                    <td v-if="item.paytype==0" class="paytype-free">免费</td>
+                                    <td v-else-if="item.paytype==1" class="paytype-negotiable">面议</td>
+                                    <td v-else-if="item.paytype==2" class="paytype-price">¥{{item.price}}</td>
+                                    <td>{{cartype[item.cartype-1]}}</td>
+                                    <td>{{item.from}}</td>
+                                    <td>{{item.to}}</td>
+                                    <td>
+                                        <a v-if="item.or_type==1" v-on:click="longtripgetinfo(item.id)" class="order-operation">申请加入</a>
+                                        <a v-else-if="item.or_type==0" v-on:click="longtripgetinfo(item.id)" class="order-operation">邀请加入</a>
+                                    </td>
                                 </tr>
                             </table>
                             <div class="mode-1-page-wrap">
                                 <ul class="mode-1-pages">
-                                    <li>
+                                    <li v-if="curpage!=1" v-on:click="check_page(curpage-1)">
                                         <img class="mode-1-page-up" src="~/images/left.png" />
                                     </li>
-                                    <li>
+                                    <li v-for="index in (pagecount)">
+                                        <span v-if="index==curpage" v-on:click="check_page(index)" class="mode-1-page-id cur">{{index}}</span>
+                                        <span v-else v-on:click="check_page(index)" class="mode-1-page-id">{{index}}</span>
+                                    </li>
+                                    <li v-if="curpage!=pagecount&&pagecount!=0" v-on:click="check_page(curpage+1)">
                                         <img class="mode-1-page-down" src="~/images/right.png" />
                                     </li>
                                 </ul>
+                            </div>
+                        </div>
+                        <div :key="orderdetailsid" id="mode-1-carpools-details" class="mode-1-carpool-details-wrap">
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">信息状态：</span>
+                                <span class="mode-1-details-msgstate-ok">{{order_details['state']==0?'有效':'无效'}}</span>
+                                <a class="mode-1-details-report">举报此信息</a>
+                            </div>
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">出发城市：</span>
+                                <span class="mode-1-details-city">{{order_details['from']}}</span>
+                                <div class="mode-1-deails-icon-to"></div>
+                                <span class="mode-1-details-title">目的城市：</span>
+                                <span class="mode-1-details-city">{{order_details['to']}}</span>
+                            </div>
+                            <div class="mode-1-details-row">
+                                <span class="mode-1-details-title">出发时间：</span>
+                                <span class="mode-1-details-starttime">{{order_details['starttime']}}</span>
+                            </div>
+                            <hr />
+                            @* ---------------------------------------------------------------------------------------------------------------------------------------------------------- *@
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">总路程约：</span>
+                                <span class="mode-1-details-mag">{{order_details['distance']/1000}}公里</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">汽油费：</span>
+                                <span class="mode-1-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">路桥费：</span>
+                                <span class="mode-1-details-mag">¥0元</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">可容纳人数：</span>
+                                <span class="mode-1-details-mag">{{order_details['capacity']}}人</span>
+                            </div>
+                            <div class="mode-1-details-col">
+                                <span v-if="order_details.or_type==1" class="mode-1-details-title">已报名人数：</span>
+                                <span v-else class="mode-1-details-title">参加人数：</span>
+                                <span class="mode-1-details-mag">{{order_details['applyed']}}人</span>
+                            </div>
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人申请加入此拼车</span>
+                            </div>
+                            <div class="mode-1-details-col" style="float:right;" v-else>
+                                <span class="mode-1-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人邀请该乘客</span>
+                            </div>
+
+                            <div class="mode-1-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-1-details-title">汽车类型：</span>
+                                <span class="mode-1-details-mag">{{cartype[order_details['cartype']-1]}}</span>
+                            </div>
+                            <div class="mode-1-details-col">
+                                <span class="mode-1-details-title">费用方式：</span>
+                                <span v-if="order_details['paytype']==0" class="mode-1-details-mag">免费</span>
+                                <span v-else-if="order_details['paytype']==1" class="mode-1-details-mag">面议</span>
+                                <span v-if="order_details['paytype']==2" class="mode-1-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div class="mode-1-details-row">
+                                <span v-if="order_details.or_type==1" class="mode-1-details-mag car-remarks-til">车主留言：</span>
+                                <span v-else class="mode-1-details-mag car-remarks-til">乘客留言：</span>
+                                <br />
+                                <pre class="car-remarks">
+        {{order_details['remarks']}}
+                                        </pre>
+                            </div>
+
+                            <a v-if="order_details.or_type==1" class="mode-1-details-btn" v-on:click="applyfor(order_details['or_id'])">申请加入</a>
+                            <a v-else class="mode-1-details-btn" v-on:click="applyfor(order_details['or_id'])">邀请加入</a>
+                            <a v-if="order_details.or_type==1" class="mode-1-details-btn" v-on:click="gettel">获取司机联系手机</a>
+                            <a v-else class="mode-1-details-btn" v-on:click="gettel">获取乘客联系手机</a>
+                            <div class="mode-1-details-msg">
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">发布用户：</span>
+                                        <span class="mode-1-details-msg-content">{{order_details['name']}}</span>
+                                    </div>
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">认证情况：</span>
+                                        <div class="mode-1-details-msg-legalize-tel"></div>
+                                    </div>
+                                </div>
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">诚信指数：</span>
+                                        <span v-if="order_details['integrity']==0" class="mode-1-details-msg-integrity-non">诚信指数未知</span>
+                                        <span v-else-if="order_details['integrity']>=7" class="mode-1-details-msg-integrity-ok">诚信指数高</span>
+                                        <span v-else-if="order_details['integrity']<7" class="mode-1-details-msg-integrity-bad">诚信指数低</span>
+                                    </div>
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">拼车编号：</span>
+                                        <div class="mode-1-details-msg-id">{{order_details['or_id']}}</div>
+                                    </div>
+                                </div>
+                                <div class="mode-1-details-msg-row">
+                                    <div class="mode-1-details-msg-col">
+                                        <span class="mode-1-details-msg-title">发布时间：</span>
+                                        <span class="mode-1-details-msg-content">{{order_details['time']}}</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mode mode-2" :key="mode2id">
+                    <div>
+                        <div>
+                            <ul class="check-city">
+                                <li class="cur-city">长沙</li>
+                                <li>[<a>切换城市</a>]</li>
+                                <li class="desc">上下班拼车为上下班搭车，顺风车</li>
+                            </ul>
+                            <div class="search">
+                                <ul class="row">
+                                    <li>出发地址：</li>
+                                    <li>
+                                        <div class="radio-wrap">
+                                            <input id="from_radio_l" name="mode-2-from" type="radio" checked />
+                                            <label for="from_radio_l"></label>
+                                        </div>
+                                        <div class="in-wrap">
+                                            <input id="mode-2-from" placeholder="小区名、大厦名、路名及门牌号..." type="text" />
+                                            @*<span v-bind:class="{hide:!mode_2_check_from}" class="in-mask"></span>*@
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="radio-wrap">
+                                            <input id="from_radio_r" name="mode-2-from" type="radio" />
+                                            <label for="from_radio_r"></label>
+                                        </div>
+                                        <label for="from_radio_r">
+                                            <span>从地图</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                                <ul class="row">
+                                    <li>目的地址：</li>
+                                    <li>
+                                        <div class="radio-wrap">
+                                            <input id="to_radio_l" name="mode-2-to" type="radio" checked />
+                                            <label for="to_radio_l"></label>
+                                        </div>
+                                        <div class="in-wrap">
+                                            <input id="mode-2-to" placeholder="小区名、大厦名、路名及门牌号..." type="text" />
+                                            @*<span class="in-mask">小区名、大厦名、路名及门牌号...</span>*@
+                                        </div>
+                                    </li>
+                                    <li>
+
+                                        <div class="radio-wrap">
+                                            <input id="to_radio_r" name="mode-2-to" type="radio" />
+                                            <label for="to_radio_r"></label>
+                                        </div>
+                                        <label for="to_radio_r">
+                                            <span>从地图</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                                <div class="btn-search-wrap">
+                                    <a class="btn-search" v-on:click="workingcarpoolsearch">搜索</a>
+                                    <span class="tip">您可以从地图上拖动起始标志</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="mode-2-map">
+
+                        </div>
+                        <table id="mode-2-car-pool-list" class="mode-2-car-pool-list">
+                            <tr>
+                                <th>编号</th>
+                                <th>拼车路线</th>
+                                <th>出发时间</th>
+                                <th>单程费用</th>
+                                <th>申请数</th>
+                                <th>已加入</th>
+                                <th>可容纳</th>
+                                <th>状态</th>
+                                <th>发布时间</th>
+                            </tr>
+                            <tr v-for="item in workinglist">
+                                <td>{{item['id']}}</td>
+                                <td>
+                                    <a v-on:click="workinggetinfo(item['id'])">{{item['from']}} →{{item['to']}}</a>
+                                    <span class="way" v-if="item['way']!=''"> 途径：{{item['way']}}</span>
+                                    <span v-if="item['isret']==true" class="isret">返程</span>
+                                </td>
+                                <td>{{item['starttime']}}</td>
+                                <td>¥{{item['price']}}元/位</td>
+                                <td>{{item['applying']}}</td>
+                                <td>{{item['applyed']}}</td>
+                                <td>{{item['capacity']}}</td>
+                                <td v-if="item['state']==0" class="invalid">有效</td>
+                                <td v-else class="uninvalid">无效</td>
+                                <td>{{item['time']}}</td>
+                            </tr>
+
+                            @*<tr v-for="item in carpool_list">
+                                    <td>
+
+                                        <img v-if="item.or_type==1" src="~/images/ico_type_car.gif" />
+                                        <img v-else src="~/images/ico_type_man.gif" />
+                                    </td>
+                                    <td>{{parse_pagelist_date(item.starttime)}}</td>
+                                    <td v-if="item.paytype==0" class="paytype-free">免费</td>
+                                    <td v-else-if="item.paytype==1" class="paytype-negotiable">面议</td>
+                                    <td v-else-if="item.paytype==2" class="paytype-price">¥{{item.price}}</td>
+                                    <td>{{cartype[item.cartype-1]}}</td>
+                                    <td>{{item.from}}</td>
+                                    <td>{{item.to}}</td>
+                                    <td>order_details
+                                        <a v-if="item.or_type==1" v-on:click="getorderinfo(item.id)" class="order-operation" href="#">申请加入</a>
+                                        <a v-else-if="item.or_type==0" v-on:click="getorderinfo(item.id)" class="order-operation" href="#">邀请加入</a>
+                                    </td>
+                                </tr>*@
+                        </table>
+                        <div style="clear:both;"></div>
+                        <div :key="orderdetailsid" id="mode-2-carpools-details" class="mode-2-carpool-details-wrap">
+                            <div class="mode-2-details-row">
+                                <span class="mode-2-details-title">信息状态：</span>
+                                <span class="mode-2-details-msgstate-ok">{{order_details['state']==0?'有效':'无效'}}</span>
+                                <a class="mode-2-details-report">举报此信息</a>
+                            </div>
+                            <div class="mode-2-details-row">
+                                <span class="mode-2-details-title">出发城市：</span>
+                                <span class="mode-2-details-city">{{order_details['from']}}</span>
+                                <div class="mode-2-deails-icon-to"></div>
+                                <span class="mode-2-details-title">目的城市：</span>
+                                <span class="mode-2-details-city">{{order_details['to']}}</span>
+                            </div>
+                            @*<div class="mode-2-details-row">
+                                    <span class="mode-2-details-title">出发时间：</span>
+                                    <span class="mode-2-details-starttime">{{order_details['starttime']}}</span>
+                                </div>*@
+                            <hr />
+                            @* ---------------------------------------------------------------------------------------------------------------------------------------------------------- *@
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">总路程约：</span>
+                                <span class="mode-2-details-mag">{{order_details['distance']/1000}}公里</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">汽油费：</span>
+                                <span class="mode-2-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">路桥费：</span>
+                                <span class="mode-2-details-mag">¥0元</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">可容纳人数：</span>
+                                <span class="mode-2-details-mag">{{order_details['capacity']}}人</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人申请加入此拼车</span>
+                            </div>
+                            <div class="mode-2-details-col">
+                                <span v-if="order_details.or_type==1" class="mode-2-details-title">已报名人数：</span>
+                                <span v-else class="mode-2-details-title">参加人数：</span>
+                                <span class="mode-2-details-mag">{{order_details['applyed']}}人</span>
+                            </div>
+                            @*<div class="mode-2-details-col" style="float:right;">
+                                    <span class="mode-2-details-mag">已有<span style="color:#f00">{{order_details['applying']}}</span>人邀请该乘客</span>
+                                </div>*@
+
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">汽车类型：</span>
+                                <span class="mode-2-details-mag">{{cartype[order_details['cartype']-1]}}</span>
+                            </div>
+                            <div class="mode-2-details-col">
+                                <span class="mode-2-details-title">费用方式：</span>
+                                <span v-if="order_details['paytype']==0" class="mode-2-details-mag">免费</span>
+                                <span v-else-if="order_details['paytype']==1" class="mode-2-details-mag">面议</span>
+                                <span v-if="order_details['paytype']==2" class="mode-2-details-mag">¥{{order_details['price']}}元</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">途径地址：</span>
+                                <span class="mode-2-details-mag">{{order_details['way']==''?'无途径点':order_details['way']}}</span>
+                            </div>
+                            <div style="clear:both;"></div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">出发时间：</span>
+                                <span class="mode-2-details-mag">{{order_details['starttime']}}</span>
+                            </div>
+                            <div class="mode-2-details-col" v-if="order_details.or_type==1">
+                                <span class="mode-2-details-title">返程时间：</span>
+                                <span class="mode-2-details-mag">{{order_details['rettime']==''?'无返程':order_details['rettime']}}</span>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div class="mode-2-details-row">
+                                <span v-if="order_details.or_type==1" class="mode-2-details-mag car-remarks-til">车主留言：</span>
+                                <span v-else class="mode-2-details-mag car-remarks-til">乘客留言：</span>
+                                <br />
+                                <pre class="car-remarks">
+        {{order_details['remarks']}}
+                                        </pre>
+                            </div>
+
+                            <a v-if="order_details.or_type==1" class="mode-2-details-btn" v-on:click="applyfor(order_details['or_id'])">申请加入</a>
+                            <a v-else class="mode-2-details-btn" v-on:click="applyfor(order_details['or_id'])">邀请加入</a>
+                            <a v-if="order_details.or_type==1" class="mode-2-details-btn" v-on:click="gettel">获取司机联系手机</a>
+                            <a v-else class="mode-2-details-btn" v-on:click="gettel">获取乘客联系手机</a>
+                            <div class="mode-2-details-msg">
+                                <div class="mode-2-details-msg-row">
+                                    <div class="mode-2-details-msg-col">
+                                        <span class="mode-2-details-msg-title">发布用户：</span>
+                                        <span class="mode-2-details-msg-content">{{order_details['name']}}</span>
+                                    </div>
+                                    <div class="mode-2-details-msg-col">
+                                        <span class="mode-2-details-msg-title">认证情况：</span>
+                                        <div class="mode-2-details-msg-legalize-tel"></div>
+                                    </div>
+                                </div>
+                                <div class="mode-2-details-msg-row">
+                                    <div class="mode-2-details-msg-col">
+                                        <span class="mode-2-details-msg-title">诚信指数：</span>
+                                        <span v-if="order_details['integrity']==0" class="mode-2-details-msg-integrity-non">诚信指数未知</span>
+                                        <span v-else-if="order_details['integrity']>=7" class="mode-2-details-msg-integrity-ok">诚信指数高</span>
+                                        <span v-else-if="order_details['integrity']<7" class="mode-2-details-msg-integrity-bad">诚信指数低</span>
+                                    </div>
+                                    <div class="mode-2-details-msg-col">
+                                        <span class="mode-2-details-msg-title">拼车编号：</span>
+                                        <div class="mode-2-details-msg-id">{{order_details['or_id']}}</div>
+                                    </div>
+                                </div>
+                                <div class="mode-2-details-msg-row">
+                                    <div class="mode-2-details-msg-col">
+                                        <span class="mode-2-details-msg-title">发布时间：</span>
+                                        <span class="mode-2-details-msg-content">{{order_details['time']}}</span>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>

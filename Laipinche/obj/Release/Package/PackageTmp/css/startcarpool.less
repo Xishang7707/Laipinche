@@ -15,7 +15,7 @@
         min-width: @page_min_width;
         height: @header_height;
         margin: 0 auto;
-        position: absolute;
+        /*position: absolute;*/
     }
 }
 
@@ -29,15 +29,21 @@
     min-width: @page_min_width;
     width: 100%;
     position: relative;
+    padding-top: 7%;
+    overflow: hidden;
 
     .content-wrap {
         width: @page_min_width;
         overflow: hidden;
-        position: absolute;
+        position: relative;
+        width: 1240px;
+        margin: 0 auto;
         padding: 20px;
-        background-color: rgba(0, 0, 0, .3);
+        background-color: rgba(0, 0, 0, .45);
 
         .mode-menu {
+            overflow: hidden;
+
             li {
                 float: left;
 
@@ -50,6 +56,7 @@
                     text-align: center;
                     margin: 0 20px;
                     color: #fff;
+                    cursor: pointer;
                 }
 
                 a:hover {
@@ -58,6 +65,18 @@
 
                 a:active {
                     background-color: rgba(0,0,0,.7)
+                }
+
+                a.cur {
+                    background-color: #09f;
+                }
+
+                a.cur:hover {
+                    background-color: #09f;
+                }
+
+                a.cur:active {
+                    background-color: #09f;
                 }
             }
         }
@@ -73,8 +92,9 @@
         .mode {
             width: @page_min_width;
         }
-
+        //长途拼车
         .mode-1 {
+            display: none;
             margin: 17px 0;
             //---------------搜索
             .mode-search {
@@ -179,7 +199,7 @@
                             .mode-1-desc-custome {
                                 background: url('../images/ico_type_man.gif') no-repeat;
                                 height: 22px;
-                                color: #c00;
+                                color: #f00;
                                 padding-left: 40px;
                             }
                         }
@@ -196,13 +216,33 @@
                         tr {
                             th {
                                 padding: 7px 0;
-                                color: #fff; 
+                                color: #fff;
                             }
 
                             td {
                                 color: #fff;
                                 text-align: center;
                                 padding: 7px 0;
+                            }
+
+                            .paytype-free {
+                                color: #f00;
+                            }
+
+                            .paytype-negotiable {
+                                color: #0f0;
+                            }
+
+                            .paytype-price {
+                                color: #fff;
+                            }
+
+                            .order-operation {
+                                color: #09f;
+                            }
+
+                            td:nth-child(7) {
+                                cursor: pointer;
                             }
                         }
 
@@ -223,10 +263,10 @@
                         margin: 13px 0;
                         position: relative;
                         height: 25px;
+                        text-align: center;
 
                         .mode-1-pages {
-                            overflow: hidden;
-                            position: absolute;
+                            display: inline-block;
 
                             li {
                                 float: left;
@@ -235,11 +275,579 @@
                                     width: 25px;
                                     cursor: pointer;
                                 }
+
+                                .mode-1-page-id {
+                                    display: block;
+                                    text-align: center;
+                                    line-height: 25px;
+                                    width: 25px;
+                                    height: 25px;
+                                    color: #fff;
+                                    cursor: pointer;
+                                }
+
+                                .mode-1-page-id.cur {
+                                    color: #09f;
+                                }
                             }
                         }
                     }
                 }
+
+                .mode-1-carpool-details-wrap {
+                    width: 680px;
+                    float: right;
+
+                    .mode-1-details-row {
+                        overflow: hidden;
+                        margin: 13px 0;
+                        text-align: left;
+                    }
+
+                    .mode-1-details-title {
+                        color: #ccc;
+                        font-size: 14px;
+                        float: left;
+                        height: 21px;
+                        line-height: 21px;
+                    }
+
+                    .mode-1-details-msgstate-ok {
+                        color: #0f0;
+                        float: left;
+                    }
+
+                    .mode-1-details-report {
+                        padding-left: 20px;
+                        background: url('../images/icon.gif') no-repeat 0 -492px;
+                        color: #09f;
+                        float: right;
+                    }
+
+                    .mode-1-deails-icon-to {
+                        width: 200px;
+                        height: 21px;
+                        background: url('../images/x.png') no-repeat -1460px -790px;
+                        float: left;
+                        margin: 0 35px;
+                    }
+
+                    .mode-1-details-city {
+                        float: left;
+                        color: #fff;
+                    }
+
+                    .mode-1-details-mag {
+                        float: left;
+                        color: #fff;
+                    }
+
+                    .mode-1-details-starttime {
+                        padding-left: 20px;
+                        height: 21px;
+                        line-height: 21px;
+                        color: #fff;
+                        background: url('../images/clock2.png') no-repeat;
+                        background-size: 16px;
+                        /*background: url(../images/icon.gif) no-repeat 0 -527px;*/
+                    }
+
+                    .mode-1-details-col {
+                        margin: 7px 0;
+                        width: 226px;
+                        overflow: hidden;
+                        float: left;
+                    }
+
+                    .car-remarks-til {
+                        background: url('../images/ico_type_car.gif') no-repeat;
+                        padding-left: 40px;
+                        color: #ccc;
+                        font-size: 14px;
+                    }
+
+                    .car-remarks {
+                        color: #fff;
+                        text-align: left;
+                    }
+
+                    .mode-1-details-btn {
+                        display: inline-block;
+                        color: #fff;
+                        background: rgba(0, 0, 0, .3);
+                        padding: 7px 13px;
+                        margin: 13px 0;
+                        margin-right: 13px;
+                        cursor: pointer;
+                    }
+
+                    .mode-1-details-btn:hover {
+                        background: rgba(0, 0, 0, .4);
+                    }
+
+                    .mode-1-details-btn:active {
+                        background: rgba(0, 0, 0, .5);
+                    }
+
+                    .mode-1-details-msg {
+                        padding: 20px;
+                        background-color: rgba(0,0,0,.35);
+                        text-align: left;
+                    }
+
+                    .mode-1-details-msg-row {
+                        overflow: hidden;
+                        margin: 13px 0;
+                    }
+
+                    .mode-1-details-msg-col {
+                        float: left;
+                        width: 300px;
+                    }
+
+                    .mode-1-details-msg-title {
+                        color: #fff;
+                        float: left;
+                    }
+
+                    .mode-1-details-msg-content {
+                        color: #fff;
+                        display: block;
+                        height: 21px;
+                        line-height: 21px;
+                    }
+
+                    .mode-1-details-msg-legalize-tel {
+                        width: 21px;
+                        height: 21px;
+                        background: url(../images/icon2.png) no-repeat -27px -0px;
+                        background-size: 130px;
+                        float: left;
+                    }
+
+                    .mode-1-details-msg-integrity-ok {
+                        background: url('../images/icon.gif') no-repeat 0 -431px;
+                        color: #0f0;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-integrity-non {
+                        background: url('../images/icon.gif') no-repeat 0 -400px;
+                        color: #ff0;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-integrity-bad {
+                        background: url('../images/icon.gif') no-repeat 0 -367px;
+                        color: #f00;
+                        padding-left: 20px;
+                    }
+
+                    .mode-1-details-msg-id {
+                        height: 21px;
+                        line-height: 21px;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        //上下班拼车
+        .mode-2 {
+            margin: 17px 0;
+            /*display:none;*/
+            .check-city {
+                overflow: hidden;
+
+                li {
+                    float: left;
+                    margin: 0 7px;
+
+                    a {
+                        color: #09f;
+                        font-size: 14px;
+                    }
+
+                    font-size: 14px;
+                    color: #fff;
+                }
+
+                li.cur-city {
+                    color: #fff;
+                    font-weight: bold;
+                    font-size: 15px;
+                }
+
+                li .desc {
+                    color: #ccc;
+                }
+            }
+
+            .radio-wrap {
+                display: inline-block;
+                overflow: hidden;
+                float: left;
+
+                input[type='radio'] {
+                    /*opacity: 0;
+                    width: 18px;
+                    height: 18px;*/
+                    display: none;
+                }
+
+                label {
+                    width: 18px;
+                    height: 18px;
+                    border: 2px solid #fff;
+                    display: block;
+                    border-radius: 100%;
+                    cursor: pointer;
+                    transition: .1s all linear;
+                }
+
+                input:checked + label {
+                    background-color: #0f0;
+                }
+            }
+
+            .in-wrap {
+                display: inline-block;
+                overflow: hidden;
+                position: relative;
+
+                input {
+                    border: 1px solid #fff;
+                    height: 22px;
+                    width: 270px;
+                    padding-left: 7px;
+                    color: #fff;
+                    font-size: 14px;
+                    transition: .1s all linear;
+                }
+
+                input::placeholder {
+                    color: #ccc;
+                }
+
+                span {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding-left: 7px;
+                    line-height: 24px;
+                    color: #c7c7c7;
+                    font-size: 14px;
+                    pointer-events: none;
+                }
+
+                input:focus {
+                    border-color: #09f;
+                }
+            }
+
+            .search {
+                float: left;
+                width: 550px;
+
+                .row {
+                    overflow: hidden;
+                    margin: 13px 7px;
+
+                    li {
+                        float: left;
+                        height: 24px;
+                        line-height: 24px;
+                        font-size: 14px;
+                        color: #fff;
+                    }
+
+                    li:last-child {
+                        float: right;
+                    }
+
+                    li:last-child span {
+                        color: #fff;
+                        font-size: 14px;
+                    }
+                }
+
+                .btn-search-wrap {
+                    margin: 17px 0;
+
+                    .btn-search {
+                        display: inline-block;
+                        color: #fff;
+                        padding: 7px 50px;
+                        font-size: 15px;
+                        background-color: rgba(0, 0, 0, .3);
+                        cursor: pointer;
+                    }
+
+                    .btn-search:hover {
+                        background-color: rgba(0, 0, 0, .4);
+                    }
+
+                    .btn-search:active {
+                        background-color: rgba(0, 0, 0, .5);
+                    }
+
+                    .tip {
+                        color: #fff;
+                        font-size: 13px;
+                        margin-left: 25px;
+                    }
+                }
+            }
+
+            #mode-2-map {
+                float: right;
+                width: 650px;
+                height: 350px;
+                background: #ccc;
+            }
+            //数据列表
+            .mode-2-car-pool-list {
+                width: 100%;
+                border-collapse: collapse;
+
+                tr:first-child {
+                    background-color: rgba(0, 0, 0, .7);
+                }
+
+                tr {
+                    th {
+                        padding: 7px 0;
+                        color: #fff;
+                        font-size: 14px;
+                    }
+
+                    td {
+                        color: #fff;
+                        text-align: center;
+                        padding: 7px 0;
+                        font-size: 14px;
+                    }
+
+                    td:nth-child(2) {
+                        text-align: left;
+
+                        a {
+                            color: #09f;
+                            cursor: pointer;
+                        }
+
+                        span.way {
+                            font-size: 13px;
+                            color: #fff;
+                        }
+
+                        span.isret {
+                            color: #fff;
+                            background-color: #ffaa00;
+                            font-size: 3px;
+                            padding: 1px 3px;
+                        }
+                    }
+
+                    td.invalid {
+                        color: #0f0;
+                    }
+
+                    td.uninvalid {
+                        color: #f00;
+                    }
+
+                    .paytype-free {
+                        color: #f00;
+                    }
+
+                    .paytype-negotiable {
+                        color: #0f0;
+                    }
+
+                    .paytype-price {
+                        color: #fff;
+                    }
+
+                    .order-operation {
+                        color: #09f;
+                    }
+                }
+
+                tr:not(:first-child):nth-child(odd) {
+                    background-color: rgba(0, 0, 0, .4);
+                }
+
+                tr:not(:first-child):nth-child(even) {
+                    background-color: rgba(0, 0, 0, .3);
+                }
+
+                tr:not(:first-child):hover {
+                    background-color: rgba(0,0,0,.5);
+                }
+            }
+
+            .mode-2-carpool-details-wrap {
+                float: right;
+                display: none;
+
+                .mode-2-details-row {
+                    overflow: hidden;
+                    margin: 13px 0;
+                }
+
+                .mode-2-details-title {
+                    color: #ccc;
+                    font-size: 14px;
+                    float: left;
+                    height: 21px;
+                    line-height: 21px;
+                }
+
+                .mode-2-details-msgstate-ok {
+                    color: #0f0;
+                    float: left;
+                }
+
+                .mode-2-details-report {
+                    padding-left: 20px;
+                    background: url('../images/icon.gif') no-repeat 0 -492px;
+                    color: #09f;
+                    float: right;
+                }
+
+                .mode-2-deails-icon-to {
+                    width: 200px;
+                    height: 21px;
+                    background: url('../images/x.png') no-repeat -1460px -790px;
+                    float: left;
+                    margin: 0 35px;
+                }
+
+                .mode-2-details-city {
+                    float: left;
+                    color: #fff;
+                }
+
+                .mode-2-details-mag {
+                    float: left;
+                    color: #fff;
+                }
+
+                .mode-2-details-starttime {
+                    padding-left: 20px;
+                    height: 21px;
+                    line-height: 21px;
+                    color: #fff;
+                    background: url('../images/clock2.png') no-repeat;
+                    background-size: 16px;
+                    /*background: url(../images/icon.gif) no-repeat 0 -527px;*/
+                }
+
+                .mode-2-details-col {
+                    margin: 7px 0;
+                    width: 226px;
+                    overflow: hidden;
+                    float: left;
+                }
+
+                .car-remarks-til {
+                    background: url('../images/ico_type_car.gif') no-repeat;
+                    padding-left: 40px;
+                    color: #ccc;
+                    font-size: 14px;
+                }
+
+                .car-remarks {
+                    color: #fff;
+                    text-align: left;
+                }
+
+                .mode-2-details-btn {
+                    display: inline-block;
+                    color: #fff;
+                    background: rgba(0, 0, 0, .3);
+                    padding: 7px 13px;
+                    margin: 13px 0;
+                    margin-right: 13px;
+                    cursor: pointer;
+                }
+
+                .mode-2-details-btn:hover {
+                    background: rgba(0, 0, 0, .4);
+                }
+
+                .mode-2-details-btn:active {
+                    background: rgba(0, 0, 0, .5);
+                }
+
+                .mode-2-details-msg {
+                    padding: 20px;
+                    background-color: rgba(0,0,0,.35);
+                }
+
+                .mode-2-details-msg-row {
+                    overflow: hidden;
+                    margin: 13px 0;
+                }
+
+                .mode-2-details-msg-col {
+                    float: left;
+                    width: 300px;
+                    text-align: left;
+                }
+
+                .mode-2-details-msg-title {
+                    color: #fff;
+                    float: left;
+                }
+
+                .mode-2-details-msg-content {
+                    color: #fff;
+                    display: block;
+                    height: 21px;
+                    line-height: 21px;
+                }
+
+                .mode-2-details-msg-legalize-tel {
+                    width: 21px;
+                    height: 21px;
+                    background: url(../images/icon2.png) no-repeat -27px -0px;
+                    background-size: 130px;
+                    float: left;
+                }
+
+                .mode-2-details-msg-integrity-ok {
+                    background: url('../images/icon.gif') no-repeat 0 -431px;
+                    color: #0f0;
+                    padding-left: 20px;
+                }
+
+                .mode-2-details-msg-integrity-non {
+                    background: url('../images/icon.gif') no-repeat 0 -400px;
+                    color: #ff0;
+                    padding-left: 20px;
+                }
+
+                .mode-2-details-msg-integrity-bad {
+                    background: url('../images/icon.gif') no-repeat 0 -367px;
+                    color: #f00;
+                    padding-left: 20px;
+                }
+
+                .mode-2-details-msg-id {
+                    height: 21px;
+                    line-height: 21px;
+                    color: #fff;
+                }
             }
         }
     }
+}
+
+#mode-1-carpools {
+    display: block;
+}
+
+#mode-1-carpools-details {
+    display: none;
 }
